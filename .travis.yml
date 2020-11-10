@@ -1,0 +1,29 @@
+language: java
+jdk: oraclejdk11
+
+after_success:
+- mvn test jacoco:report coveralls:report -B
+- bash <(curl -Ls https://coverage.codacy.com/get.sh)
+
+cache:
+  directories:
+  - $HOME/.m2
+
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_4f0d00631887_key -iv $encrypted_4f0d00631887_iv
+  -in .travis/gpg.asc.enc -out .travis/gpg.asc -d
+
+deploy:
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: Glusk/srp6-variables
+      condition: $TRAVIS_TAG =~ ^[0-9]+.[0-9]+.[0-9]+$ # Only deploy tags that match something like 1.0.0
+  - provider: script
+    script: bash deploy.sh
+    skip_cleanup: true
+    on:
+      repo: Glusk/srp6-variables
+      branch: master
