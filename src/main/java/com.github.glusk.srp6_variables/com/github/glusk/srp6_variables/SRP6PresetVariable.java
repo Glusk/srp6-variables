@@ -61,12 +61,8 @@ public final class SRP6PresetVariable implements SRP6Variable {
         while (i < tmp.length && tmp[i] == 0) {
             i++;
         }
-        if (i == 0) {
-            minimal = () -> tmp;
-        } else {
-            final int offSet = i;
-            minimal = () -> Arrays.copyOfRange(tmp, offSet, tmp.length);
-        }
+        final int offSet = i;
+        minimal = () -> Arrays.copyOfRange(tmp, offSet, tmp.length);
 
         // (3) If reversed in (1), reverse again
         minimal = order.equals(BIG_ENDIAN) ? minimal : minimal.reversed();
