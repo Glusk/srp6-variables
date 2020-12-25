@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public final class SRP6VariableTest {
     @Test
-    public void zeroPadsToBigEndianToSize() {
+    public void zeroPadsBigEndianToSize() {
         assertArrayEquals(
             new byte[] {0, 0, 1, 2, 0},
             new SRP6Variable() {
