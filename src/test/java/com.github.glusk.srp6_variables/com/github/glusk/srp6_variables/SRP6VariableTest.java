@@ -1,8 +1,10 @@
 package com.github.glusk.srp6_variables;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigInteger;
 import java.nio.ByteOrder;
 
 import com.github.glusk.caesar.Bytes;
@@ -49,6 +51,18 @@ public final class SRP6VariableTest {
                     }
                 }.bytes(ByteOrder.BIG_ENDIAN, 2).asArray();
             }
+        );
+    }
+    @Test
+    public void returnsAsBigInteger() {
+        assertEquals(
+            BigInteger.ZERO,
+            new SRP6Variable() {
+                @Override
+                public Bytes bytes(final ByteOrder order) {
+                    return () -> new byte[0];
+                }
+            }.asNonNegativeBigInteger()
         );
     }
 }
