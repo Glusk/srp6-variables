@@ -18,6 +18,7 @@ public final class SRP6PresetVariableTest {
             ).bytes(ByteOrder.BIG_ENDIAN).asArray()
         );
     }
+    @Test
     public void returnsLittleEndianByteSequence() {
         assertArrayEquals(
             new byte[] {0, 2, 1},
