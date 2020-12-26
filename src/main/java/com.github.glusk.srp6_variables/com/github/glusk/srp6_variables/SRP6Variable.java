@@ -111,4 +111,19 @@ public interface SRP6Variable {
     default BigInteger asNonNegativeBigInteger() {
         return new BigInteger(1, bytes(ByteOrder.BIG_ENDIAN).asArray());
     }
+
+    /**
+     * Returns {@code true} if and only if the minimal byte array
+     * representation of SRP-6 Variables {@code this} and {@code that} equals.
+     *
+     * @param that the object to compare against
+     * @return {@code true} if SRP-6 Variables equal, {@code false} otherwise
+     */
+    default boolean equals(SRP6Variable that) {
+        return
+            Arrays.equals(
+                this.bytes(ByteOrder.BIG_ENDIAN).asArray(),
+                that.bytes(ByteOrder.BIG_ENDIAN).asArray()
+            );
+    }
 }
