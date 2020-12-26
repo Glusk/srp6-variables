@@ -3,6 +3,7 @@ package com.github.glusk.srp6_variables;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
 import java.nio.ByteOrder;
@@ -63,6 +64,26 @@ public final class SRP6VariableTest {
                     return () -> new byte[0];
                 }
             }.asNonNegativeBigInteger()
+        );
+    }
+    @Test
+    public void sameMinimalRepresentationsEqual() {
+        assertTrue(
+            new SRP6Variable() {
+                @Override
+                public Bytes bytes(final ByteOrder order) {
+                    // Big-endian representation
+                    return () -> new byte[] {1, 2, 0};
+                }
+            }.equals(
+                new SRP6Variable() {
+                    @Override
+                    public Bytes bytes(final ByteOrder order) {
+                        // Big-endian representation
+                        return () -> new byte[] {1, 2, 0};
+                    }
+                }
+            )
         );
     }
 }
