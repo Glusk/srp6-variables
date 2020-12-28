@@ -12,7 +12,7 @@
  * u    Random scrambling parameter
  * a,b  Secret ephemeral values
  * A,B  Public ephemeral values
- * x    Private key (derived from p and s)
+ * x    Private key derived from the password and salt
  * v    Password verifier
  * ---
  * M1,M2  Proofs of session key
