@@ -12,12 +12,12 @@ import com.github.glusk.caesar.Bytes;
 
 import org.junit.jupiter.api.Test;
 
-public final class SRP6VariableTest {
+public final class SRP6IntegerVariableTest {
     @Test
     public void zeroPadsBigEndianToSize() {
         assertArrayEquals(
             new byte[] {0, 0, 1, 2, 0},
-            new SRP6Variable() {
+            new SRP6IntegerVariable() {
                 @Override
                 public Bytes bytes(final ByteOrder order) {
                     // Big-endian representation
@@ -30,7 +30,7 @@ public final class SRP6VariableTest {
     public void zeroPadsLittleEndianToSize() {
         assertArrayEquals(
             new byte[] {0, 2, 1, 0, 0},
-            new SRP6Variable() {
+            new SRP6IntegerVariable() {
                 @Override
                 public Bytes bytes(final ByteOrder order) {
                     // Little-endian representation
@@ -44,7 +44,7 @@ public final class SRP6VariableTest {
         assertThrows(
             SRP6PaddingException.class,
             () -> {
-                new SRP6Variable() {
+                new SRP6IntegerVariable() {
                     @Override
                     public Bytes bytes(final ByteOrder order) {
                         // Big-endian representation
@@ -58,7 +58,7 @@ public final class SRP6VariableTest {
     public void returnsAsBigInteger() {
         assertEquals(
             BigInteger.ZERO,
-            new SRP6Variable() {
+            new SRP6IntegerVariable() {
                 @Override
                 public Bytes bytes(final ByteOrder order) {
                     return () -> new byte[0];
@@ -69,14 +69,14 @@ public final class SRP6VariableTest {
     @Test
     public void sameMinimalRepresentationsEqual() {
         assertTrue(
-            new SRP6Variable() {
+            new SRP6IntegerVariable() {
                 @Override
                 public Bytes bytes(final ByteOrder order) {
                     // Big-endian representation
                     return () -> new byte[] {1, 2, 0};
                 }
             }.equals(
-                new SRP6Variable() {
+                new SRP6IntegerVariable() {
                     @Override
                     public Bytes bytes(final ByteOrder order) {
                         // Big-endian representation

@@ -27,9 +27,9 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * <a href ="https://crypto.stackexchange.com/q/8626">this SO question</a> for
  * more info).
  */
-public final class SRP6PrivateKey implements SRP6Variable {
-    /** SRP-6 variable: private key (x). */
-    private final SRP6Variable privateKey;
+public final class SRP6PrivateKey implements SRP6IntegerVariable {
+    /** SRP-6 Integer Variable: private key (x). */
+    private final SRP6IntegerVariable privateKey;
 
     /**
      * Constructs a new SRP-6 Private Key as specified in RFC 2945.
@@ -85,7 +85,7 @@ public final class SRP6PrivateKey implements SRP6Variable {
         final ByteOrder endianness
     ) {
         this(
-            new SRP6PresetVariable(
+            new SRP6PresetIntegerVariable(
                 new Hash(hashFunction, salt, password),
                 endianness
             )
@@ -96,13 +96,13 @@ public final class SRP6PrivateKey implements SRP6Variable {
      * Hidden constructor.
      * <p>
      * Users should not be able to set this variable directly. Constants and
-     * preset values must be created by using the {@link SRP6PresetVariable}
-     * class.
+     * preset values must be created by using the
+     * {@link SRP6PresetIntegerVariable} class.
      *
-     * @param privateKey SRP-6 variable: private key (x)
+     * @param privateKey SRP-6 Integer Variable: private key (x)
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    private SRP6PrivateKey(final SRP6Variable privateKey) {
+    private SRP6PrivateKey(final SRP6IntegerVariable privateKey) {
         this.privateKey = privateKey;
     }
 

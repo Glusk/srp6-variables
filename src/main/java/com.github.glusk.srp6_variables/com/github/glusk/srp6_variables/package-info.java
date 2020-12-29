@@ -19,5 +19,11 @@
  * S      Session key
  * K      Hashed session key
  * </pre>
+ * <p>
+ * We can roughly divide the variables into 2 groups:
+ * <ul>
+ *   <li>{@link SRP6IntegerVariable}s</li>
+ *   <li>plain {@link com.github.glusk.caesar.Bytes}</li>
+ * </ul>.
  */
 package com.github.glusk.srp6_variables;

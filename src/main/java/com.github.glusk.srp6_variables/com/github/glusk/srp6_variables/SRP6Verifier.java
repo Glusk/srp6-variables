@@ -17,26 +17,26 @@ import com.github.glusk.caesar.Bytes;
  * Refer to the  {@link com.github.glusk.srp6_variables package docs} for more
  * info on notation used.
  */
-public final class SRP6Verifier implements SRP6Variable {
-    /** SRP-6 Variable: prime (N). */
-    private final SRP6Variable prime;
-    /** SRP-6 Variable: generator (g). */
-    private final SRP6Variable generator;
-    /** SRP-6 Variable: private key (x). */
-    private final SRP6Variable privateKey;
+public final class SRP6Verifier implements SRP6IntegerVariable {
+    /** SRP-6 Integer Variable: prime (N). */
+    private final SRP6IntegerVariable prime;
+    /** SRP-6 Integer Variable: generator (g). */
+    private final SRP6IntegerVariable generator;
+    /** SRP-6 Integer Variable: private key (x). */
+    private final SRP6IntegerVariable privateKey;
 
     /**
      * Constructs a new SRP-6 Verifier from prime, generator and private key.
      *
-     * @param prime SRP-6 Variable: prime (N)
-     * @param generator SRP-6 Variable: generator (g)
-     * @param privateKey SRP-6 Variable: private key (x)
+     * @param prime SRP-6 Integer Variable: prime (N)
+     * @param generator SRP-6 Integer Variable: generator (g)
+     * @param privateKey SRP-6 Integer Variable: private key (x)
      */
     @SuppressWarnings("checkstyle:hiddenfield")
     public SRP6Verifier(
-        final SRP6Variable prime,
-        final SRP6Variable generator,
-        final SRP6Variable privateKey
+        final SRP6IntegerVariable prime,
+        final SRP6IntegerVariable generator,
+        final SRP6IntegerVariable privateKey
     ) {
         this.prime = prime;
         this.generator = generator;
@@ -52,6 +52,6 @@ public final class SRP6Verifier implements SRP6Variable {
 
         BigInteger v = g.modPow(x, N);
 
-        return new SRP6PresetVariable(v).bytes(preferredOrder);
+        return new SRP6PresetIntegerVariable(v).bytes(preferredOrder);
     }
 }

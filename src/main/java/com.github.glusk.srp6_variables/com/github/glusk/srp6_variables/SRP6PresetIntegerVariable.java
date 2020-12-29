@@ -9,23 +9,26 @@ import java.util.Arrays;
 import com.github.glusk.caesar.Bytes;
 
 /**
- * A pre-set SRP-6 variable.
+ * A Pre-Set SRP-6 Integer Variable.
  * <p>
  * Objects of this class can be used to mock a variable for testing purposes or
  * to represent constants.
  */
-public final class SRP6PresetVariable implements SRP6Variable {
-    /** Pre-set byte sequence that represents {@code this} variable. */
+public final class SRP6PresetIntegerVariable implements SRP6IntegerVariable {
+    /**
+     * A pre-set byte sequence that represents {@code this}
+     * SRP-6 Integer Variable.
+     */
     private final Bytes bytes;
     /** The byte order of {@code bytes}. */
     private final ByteOrder order;
 
     /**
-     * Creates a new pre-set SRP-6 variable from a {@code BigInteger}.
+     * Creates a new Pre-Set SRP-6 Integer Variable from a {@code BigInteger}.
      * <p>
      * Equivalent to:
      * <pre>
-     * new SRP6PresetVariable(
+     * new SRP6PresetIntegerVariable(
      *     () -&gt; bi.toByteArray(),
      *     ByteOrder.BIG_ENDIAN
      * )
@@ -33,19 +36,23 @@ public final class SRP6PresetVariable implements SRP6Variable {
      *
      * @param bi pre-set value {@code BigInteger} argument
      */
-    public SRP6PresetVariable(final BigInteger bi) {
+    public SRP6PresetIntegerVariable(final BigInteger bi) {
         this(() -> bi.toByteArray(), BIG_ENDIAN);
     }
 
     /**
-     * Creates a new pre-set SRP-6 variable from the specified byte sequence
-     * and the desired byte {@code order}.
+     * Creates a new Pre-Set SRP-6 Integer Variable from the specified byte
+     * sequence and the desired byte {@code order}.
      *
-     * @param bytes pre-set byte sequence that represents {@code this} variable
+     * @param bytes pre-set byte sequence that represents {@code this}
+     *              SRP-6 Integer Variable
      * @param order the byte order of {@code bytes}
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public SRP6PresetVariable(final Bytes bytes, final ByteOrder order) {
+    public SRP6PresetIntegerVariable(
+        final Bytes bytes,
+        final ByteOrder order
+    ) {
         this.bytes = bytes;
         this.order = order;
     }
