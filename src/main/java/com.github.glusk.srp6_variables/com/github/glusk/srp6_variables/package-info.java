@@ -10,8 +10,8 @@
  * k    Multiplier parameter (k = H(N, g) in SRP-6a, k = 3 for legacy SRP-6)
  * s    User's salt
  * u    Random scrambling parameter
- * a,b  Secret ephemeral values
- * A,B  Public ephemeral values
+ * a,b  Ephemeral private keys, generated randomly and not publicly revealed
+ * A,B  Corresponding public keys
  * x    Private key derived from the password and salt
  * v    Password verifier
  * ---
