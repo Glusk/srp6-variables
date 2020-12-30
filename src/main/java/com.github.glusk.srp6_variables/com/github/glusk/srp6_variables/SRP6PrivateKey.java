@@ -26,6 +26,13 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * being able to learn if two users share the same password (refer to
  * <a href ="https://crypto.stackexchange.com/q/8626">this SO question</a> for
  * more info).
+ * <p>
+ * You are also permitted to compute this value as a custom hash:
+ * <pre>
+ * x = H(args)
+ * </pre>
+ * but this is highly discouraged because of potential incompatibility with
+ * other libraries.
  */
 public final class SRP6PrivateKey implements SRP6IntegerVariable {
     /** SRP-6 Integer Variable: private key (x). */
@@ -87,6 +94,33 @@ public final class SRP6PrivateKey implements SRP6IntegerVariable {
         this(
             new SRP6PresetIntegerVariable(
                 new Hash(hashFunction, salt, password),
+                endianness
+            )
+        );
+    }
+
+    /**
+     * Constructs a new SRP-6 Private Key from {@code args}.
+     * <pre>
+     * x = H(args)
+     * </pre>
+     * <p>
+     * Use this constructor if none of the other constructors are compatible
+     * with your version of the protocol.
+     *
+     * @param hashFunction a one-way hash function - H()
+     * @param args custom arguments
+     * @param endianness the byte order to use when converting the resulting
+     *                   hash to integer
+     */
+    public SRP6PrivateKey(
+        final ByteOrder endianness,
+        final ImmutableMessageDigest hashFunction,
+        final Bytes... args
+    ) {
+        this(
+            new SRP6PresetIntegerVariable(
+                new Hash(hashFunction, args),
                 endianness
             )
         );

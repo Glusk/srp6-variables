@@ -8,7 +8,15 @@ import com.github.glusk.caesar.Hex;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
 
-/** Wikipedia Python example variable: private key (x). */
+/**
+ * Wikipedia Python example variable: private key (x).
+ * <p>
+ * The example on Wikipedia computes this variable in an unusual way:
+ * <pre>
+ * x = H(s | ":" | I | ":" | P)
+ * x = H("2577509697835434688:person:password1234")
+ * </pre>
+ */
 public final class WikiPrivateKey implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
