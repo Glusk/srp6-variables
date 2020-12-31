@@ -15,24 +15,40 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * x = H(s | p)
  * </pre>
  * where {@code H()} is a one-way hash function, {@code |} a concatenation
- * operator, {@code s} a random salt and {@code p} the client's password.
+ * operator, {@code s} a random salt and {@code p} the client's password [1].
  * <p>
- * RFC 2945 further specifies {@code p} as:
+ * In an article that documents refinements to the protocol, another formula is
+ * used:
  * <pre>
- * p = H(I | ":" | P)
+ * x = H(s | I | P)
  * </pre>
  * where {@code I} is cleartext username, or identity, and {@code P} cleartext
- * password. Use of {@code I} within {@code x} avoids a malicious server from
+ * password [2].
+ * <p>
+ * RFC 2945 further specifies {@code x} as:
+ * <pre>
+ * x = H(s | H(I | ":" | P))
+ * </pre>
+ * where {@code I} is cleartext username, or identity, and {@code P} cleartext
+ * password [3].
+ * <p>
+ * Use of {@code I} within {@code x} avoids a malicious server from
  * being able to learn if two users share the same password (refer to
  * <a href ="https://crypto.stackexchange.com/q/8626">this SO question</a> for
  * more info).
- * <p>
- * You are also permitted to compute this value as a custom hash:
- * <pre>
- * x = H(args)
- * </pre>
- * but this is highly discouraged because of potential incompatibility with
- * other libraries.
+ * <h2>References:</h2>
+ * <ul>
+ *   <li>
+ *     [1] WU, Thomas. The Secure Remote Password Protocol.<br>
+ *     <a href="http://www.scs.stanford.edu/nyu/05sp/sched/readings/srp.pdf">http://www.scs.stanford.edu/nyu/05sp/sched/readings/srp.pdf</a>, 1997.
+ *   </li>
+ *   <li>
+ *     [2] WU, Thomas. SRP-6: Improvements and Refinements to the Secure
+ *     Remote Password Protocol.<br>
+ *     <a href="http://srp.stanford.edu/srp6.ps">http://srp.stanford.edu/srp6.ps</a>, 2002.
+ *   </li>
+ *   <li>[3] <a href="https://tools.ietf.org/html/rfc2945">RFC 2945</a></li>
+ * </ul>
  */
 public final class SRP6PrivateKey implements SRP6IntegerVariable {
     /** SRP-6 Integer Variable: private key (x). */
@@ -73,6 +89,52 @@ public final class SRP6PrivateKey implements SRP6IntegerVariable {
     }
 
     /**
+     * Constructs a new SRP-6 Private Key as specified in "SRP-6: Improvements
+     * and Refinements to the Secure Remote Password Protocol".
+     * <pre>
+     * x = H(s | I | P)
+     * </pre>
+     * <p>
+     * In addition, you can specify a special glue byte sequence to hash as:
+     * <pre>
+     * x = H(s | glue | I | glue | P)
+     * </pre>
+     * This is how private key is computed in the Wikipedia's Python example
+     * where a colon (":") is used as glue.
+     *
+     * @param hashFunction a one-way hash function - H()
+     * @param glue a custom glue to concatenate the hash arguments with
+     * @param salt SRP-6 variable: salt (s)
+     * @param cleartextUsername SRP-6 variable: cleartext username -
+     *                          identity (I)
+     * @param cleartextPassword SRP-6 variable: cleartext password (P)
+     * @param endianness the byte order to use when converting the resulting
+     *                   hash to integer
+     */
+    public SRP6PrivateKey(
+        final ImmutableMessageDigest hashFunction,
+        final Bytes glue,
+        final Bytes salt,
+        final Bytes cleartextUsername,
+        final Bytes cleartextPassword,
+        final ByteOrder endianness
+    ) {
+        this(
+            new SRP6PresetIntegerVariable(
+                new Hash(
+                    hashFunction,
+                    salt,
+                    glue,
+                    cleartextUsername,
+                    glue,
+                    cleartextPassword
+                ),
+                endianness
+            )
+        );
+    }
+
+    /**
      * Constructs a new SRP-6 Private Key from {@code salt} and
      * {@code password}.
      * <pre>
@@ -94,33 +156,6 @@ public final class SRP6PrivateKey implements SRP6IntegerVariable {
         this(
             new SRP6PresetIntegerVariable(
                 new Hash(hashFunction, salt, password),
-                endianness
-            )
-        );
-    }
-
-    /**
-     * Constructs a new SRP-6 Private Key from {@code args}.
-     * <pre>
-     * x = H(args)
-     * </pre>
-     * <p>
-     * Use this constructor if none of the other constructors are compatible
-     * with your version of the protocol.
-     *
-     * @param hashFunction a one-way hash function - H()
-     * @param args custom arguments
-     * @param endianness the byte order to use when converting the resulting
-     *                   hash to integer
-     */
-    public SRP6PrivateKey(
-        final ByteOrder endianness,
-        final ImmutableMessageDigest hashFunction,
-        final Bytes... args
-    ) {
-        this(
-            new SRP6PresetIntegerVariable(
-                new Hash(hashFunction, args),
                 endianness
             )
         );

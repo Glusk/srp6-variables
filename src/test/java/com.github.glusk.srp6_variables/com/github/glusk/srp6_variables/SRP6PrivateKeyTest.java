@@ -47,17 +47,16 @@ public final class SRP6PrivateKeyTest {
         assertTrue(
             new WikiPrivateKey().equals(
                 new SRP6PrivateKey(
-                    ByteOrder.BIG_ENDIAN,
                     new ImmutableMessageDigest(
                         MessageDigest.getInstance("SHA-256")
                     ),
+                    new PlainText(":"),
                     new PlainText(
                         new WikiSalt().asNonNegativeBigInteger().toString()
                     ),
-                    new PlainText(":"),
                     new WikiIdentity(),
-                    new PlainText(":"),
-                    new WikiPassword()
+                    new WikiPassword(),
+                    ByteOrder.BIG_ENDIAN
                 )
             ),
             "Computed variable does not match the Wikipedia example variable"
