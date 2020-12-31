@@ -36,6 +36,19 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * being able to learn if two users share the same password (refer to
  * <a href ="https://crypto.stackexchange.com/q/8626">this SO question</a> for
  * more info).
+ * <p>
+ * If there isn't a suitable constructor for your version of the protocol, you
+ * can set a custom private key like so:
+ * <pre>
+ * // ByteOrder byteOrder = ...
+ * SRP6IntegerVariable x =
+ *     new SRP6PresetIntegerVariable(
+ *         new Hash(
+ *             // custom args
+ *         ),
+ *         byteOrder
+ *     );
+ * </pre>
  * <h2>References:</h2>
  * <ul>
  *   <li>
@@ -85,52 +98,6 @@ public final class SRP6PrivateKey implements SRP6IntegerVariable {
                 cleartextPassword
             ),
             endianness
-        );
-    }
-
-    /**
-     * Constructs a new SRP-6 Private Key as specified in "SRP-6: Improvements
-     * and Refinements to the Secure Remote Password Protocol".
-     * <pre>
-     * x = H(s | I | P)
-     * </pre>
-     * <p>
-     * In addition, you can specify a special glue byte sequence to hash as:
-     * <pre>
-     * x = H(s | glue | I | glue | P)
-     * </pre>
-     * This is how private key is computed in the Wikipedia's Python example
-     * where a colon (":") is used as glue.
-     *
-     * @param hashFunction a one-way hash function - H()
-     * @param glue a custom glue to concatenate the hash arguments with
-     * @param salt SRP-6 variable: salt (s)
-     * @param cleartextUsername SRP-6 variable: cleartext username -
-     *                          identity (I)
-     * @param cleartextPassword SRP-6 variable: cleartext password (P)
-     * @param endianness the byte order to use when converting the resulting
-     *                   hash to integer
-     */
-    public SRP6PrivateKey(
-        final ImmutableMessageDigest hashFunction,
-        final Bytes glue,
-        final Bytes salt,
-        final Bytes cleartextUsername,
-        final Bytes cleartextPassword,
-        final ByteOrder endianness
-    ) {
-        this(
-            new SRP6PresetIntegerVariable(
-                new Hash(
-                    hashFunction,
-                    salt,
-                    glue,
-                    cleartextUsername,
-                    glue,
-                    cleartextPassword
-                ),
-                endianness
-            )
         );
     }
 

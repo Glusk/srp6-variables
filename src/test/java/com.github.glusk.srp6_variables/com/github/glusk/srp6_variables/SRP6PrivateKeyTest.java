@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.jupiter.api.Test;
 
 import com.github.glusk.caesar.PlainText;
+import com.github.glusk.caesar.hashing.Hash;
 import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
 
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Identity;
@@ -46,16 +47,21 @@ public final class SRP6PrivateKeyTest {
         throws NoSuchAlgorithmException {
         assertTrue(
             new WikiPrivateKey().equals(
-                new SRP6PrivateKey(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-256")
+                new SRP6PresetIntegerVariable(
+                    new Hash(
+                        new ImmutableMessageDigest(
+                            MessageDigest.getInstance("SHA-256")
+                        ),
+                        new PlainText(
+                            new WikiSalt()
+                                .asNonNegativeBigInteger()
+                                .toString()
+                        ),
+                        new PlainText(":"),
+                        new WikiIdentity(),
+                        new PlainText(":"),
+                        new WikiPassword()
                     ),
-                    new PlainText(":"),
-                    new PlainText(
-                        new WikiSalt().asNonNegativeBigInteger().toString()
-                    ),
-                    new WikiIdentity(),
-                    new WikiPassword(),
                     ByteOrder.BIG_ENDIAN
                 )
             ),
