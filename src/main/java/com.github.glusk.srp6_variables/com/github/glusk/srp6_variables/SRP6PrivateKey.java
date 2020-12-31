@@ -15,17 +15,53 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * x = H(s | p)
  * </pre>
  * where {@code H()} is a one-way hash function, {@code |} a concatenation
- * operator, {@code s} a random salt and {@code p} the client's password.
+ * operator, {@code s} a random salt and {@code p} the client's password [1].
  * <p>
- * RFC 2945 further specifies {@code p} as:
+ * In an article that documents refinements to the protocol, another formula is
+ * used:
  * <pre>
- * p = H(I | ":" | P)
+ * x = H(s | I | P)
  * </pre>
  * where {@code I} is cleartext username, or identity, and {@code P} cleartext
- * password. Use of {@code I} within {@code x} avoids a malicious server from
+ * password [2].
+ * <p>
+ * RFC 2945 further specifies {@code x} as:
+ * <pre>
+ * x = H(s | H(I | ":" | P))
+ * </pre>
+ * where {@code I} is cleartext username, or identity, and {@code P} cleartext
+ * password [3].
+ * <p>
+ * Use of {@code I} within {@code x} avoids a malicious server from
  * being able to learn if two users share the same password (refer to
  * <a href ="https://crypto.stackexchange.com/q/8626">this SO question</a> for
  * more info).
+ * <p>
+ * If there isn't a suitable constructor for your version of the protocol, you
+ * can set a custom private key like so:
+ * <pre>
+ * // ByteOrder byteOrder = ...
+ * SRP6IntegerVariable x =
+ *     new SRP6PresetIntegerVariable(
+ *         new Hash(
+ *             // custom args
+ *         ),
+ *         byteOrder
+ *     );
+ * </pre>
+ * <h2>References:</h2>
+ * <ul>
+ *   <li>
+ *     [1] WU, Thomas. The Secure Remote Password Protocol.<br>
+ *     <a href="http://www.scs.stanford.edu/nyu/05sp/sched/readings/srp.pdf">http://www.scs.stanford.edu/nyu/05sp/sched/readings/srp.pdf</a>, 1997.
+ *   </li>
+ *   <li>
+ *     [2] WU, Thomas. SRP-6: Improvements and Refinements to the Secure
+ *     Remote Password Protocol.<br>
+ *     <a href="http://srp.stanford.edu/srp6.ps">http://srp.stanford.edu/srp6.ps</a>, 2002.
+ *   </li>
+ *   <li>[3] <a href="https://tools.ietf.org/html/rfc2945">RFC 2945</a></li>
+ * </ul>
  */
 public final class SRP6PrivateKey implements SRP6IntegerVariable {
     /** SRP-6 Integer Variable: private key (x). */
