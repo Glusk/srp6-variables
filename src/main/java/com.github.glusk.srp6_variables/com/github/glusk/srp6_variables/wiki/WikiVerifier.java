@@ -6,13 +6,13 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** Wikipedia Python example variable: verifier (v). */
 public final class WikiVerifier implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "a6:36:25:44:92:ec:0f:73:91:d6:b5:96:ec:92:6b:"
               + "91:86:67:75:07:2d:fd:75:8c:6e:bc:51:bf:72:77:"

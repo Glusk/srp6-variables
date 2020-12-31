@@ -43,7 +43,7 @@ public final class SRP6ScramblingParameterTest {
         throws NoSuchAlgorithmException {
         assertTrue(
             new WikiScramblingParameter().equals(
-                new SRP6PresetIntegerVariable(
+                new SRP6CustomIntegerVariable(
                     new Hash(
                         new ImmutableMessageDigest(
                             MessageDigest.getInstance("SHA-256")

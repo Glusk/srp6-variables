@@ -6,13 +6,13 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** RFC5054 Test Vector: prime (N). */
 public final class RFC5054Prime implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "EEAF0AB9 ADB38DD6 9C33F80A FA8FC5E8 60726187 75FF3C0B"
               + "9EA2314C 9C256576 D674DF74 96EA81D3 383B4813 D692C6E0"

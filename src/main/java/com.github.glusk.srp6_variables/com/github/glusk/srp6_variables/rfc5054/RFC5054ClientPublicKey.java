@@ -6,13 +6,13 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** RFC5054 Test Vector: client ephemeral public key (A). */
 public final class RFC5054ClientPublicKey implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "61D5E490 F6F1B795 47B0704C 436F523D D0E560F0 C64115BB"
               + "72557EC4 4352E890 3211C046 92272D8B 2D1A5358 A2CF1B6E"

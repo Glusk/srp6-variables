@@ -41,7 +41,7 @@ public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
         final ByteOrder endianness
     ) {
         this(
-            new SRP6PresetIntegerVariable(
+            new SRP6CustomIntegerVariable(
                 new Hash(
                     hashFunction,
                     clientPublicKey.bytes(endianness),

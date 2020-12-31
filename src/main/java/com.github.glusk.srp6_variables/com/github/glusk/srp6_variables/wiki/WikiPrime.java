@@ -6,13 +6,13 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** Wikipedia Python example variable: prime (N). */
 public final class WikiPrime implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "00:c0:37:c3:75:88:b4:32:98:87:e6:1c:2d:a3:32:"
               + "4b:1b:a4:b8:1a:63:f9:74:8f:ed:2d:8a:41:0c:2f:"

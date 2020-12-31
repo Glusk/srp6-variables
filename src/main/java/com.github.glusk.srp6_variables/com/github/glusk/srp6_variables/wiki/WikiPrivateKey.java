@@ -6,7 +6,7 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /**
  * Wikipedia Python example variable: private key (x).
@@ -20,7 +20,7 @@ import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
 public final class WikiPrivateKey implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "28a914ef 69978f5f e544f030 bea89eab"
               + "675bcaa2 ec79cd36 efa1d410 d27d5215"
