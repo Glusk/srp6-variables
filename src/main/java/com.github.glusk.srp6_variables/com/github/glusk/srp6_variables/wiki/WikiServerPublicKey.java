@@ -6,13 +6,13 @@ import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
-import com.github.glusk.srp6_variables.SRP6PresetIntegerVariable;
+import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** Wikipedia Python example variable: server ephemeral public key (B). */
 public final class WikiServerPublicKey implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
-        new SRP6PresetIntegerVariable(
+        new SRP6CustomIntegerVariable(
             new Hex(
                 "70:9f:34:07:38:e6:2e:46:18:46:34:ac:d2:cd:7c:"
               + "86:1a:7d:92:c5:fd:e9:eb:43:ac:12:02:26:a0:eb:"

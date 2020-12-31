@@ -7,12 +7,12 @@ import java.nio.ByteOrder;
 
 import org.junit.jupiter.api.Test;
 
-public final class SRP6PresetIntegerVariableTest {
+public final class SRP6CustomIntegerVariableTest {
     @Test
     public void trimsLeadingZeroes() {
         assertArrayEquals(
             new byte[] {1, 2, 0},
-            new SRP6PresetIntegerVariable(
+            new SRP6CustomIntegerVariable(
                 () -> new byte[] {0, 1, 2, 0},
                 ByteOrder.BIG_ENDIAN
             ).bytes(ByteOrder.BIG_ENDIAN).asArray()
@@ -22,7 +22,7 @@ public final class SRP6PresetIntegerVariableTest {
     public void returnsLittleEndianByteSequence() {
         assertArrayEquals(
             new byte[] {0, 2, 1},
-            new SRP6PresetIntegerVariable(
+            new SRP6CustomIntegerVariable(
                 () -> new byte[] {1, 2, 0},
                 ByteOrder.BIG_ENDIAN
             ).bytes(ByteOrder.LITTLE_ENDIAN).asArray()
@@ -32,7 +32,7 @@ public final class SRP6PresetIntegerVariableTest {
     public void zeroReturnsAnEmptyByteSequence() {
         assertArrayEquals(
             new byte[0],
-            new SRP6PresetIntegerVariable(BigInteger.ZERO)
+            new SRP6CustomIntegerVariable(BigInteger.ZERO)
                 .bytes(ByteOrder.BIG_ENDIAN)
                 .asArray()
         );

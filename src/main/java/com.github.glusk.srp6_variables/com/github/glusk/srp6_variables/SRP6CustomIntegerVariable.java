@@ -9,14 +9,17 @@ import java.util.Arrays;
 import com.github.glusk.caesar.Bytes;
 
 /**
- * A Pre-Set SRP-6 Integer Variable.
+ * A Custom SRP-6 Integer Variable.
  * <p>
  * Objects of this class can be used to mock a variable for testing purposes or
  * to represent constants.
+ * <p>
+ * You can also use this class to instantiate a custom variable if none of the
+ * other classes in this package seem suitable.
  */
-public final class SRP6PresetIntegerVariable implements SRP6IntegerVariable {
+public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
     /**
-     * A pre-set byte sequence that represents {@code this}
+     * The byte sequence that represents {@code this}
      * SRP-6 Integer Variable.
      */
     private final Bytes bytes;
@@ -24,32 +27,33 @@ public final class SRP6PresetIntegerVariable implements SRP6IntegerVariable {
     private final ByteOrder order;
 
     /**
-     * Creates a new Pre-Set SRP-6 Integer Variable from a {@code BigInteger}.
+     * Creates a new Custom SRP-6 Integer Variable from a {@code BigInteger}.
      * <p>
      * Equivalent to:
      * <pre>
-     * new SRP6PresetIntegerVariable(
+     * new SRP6CustomIntegerVariable(
      *     () -&gt; bi.toByteArray(),
      *     ByteOrder.BIG_ENDIAN
      * )
      * </pre>
      *
-     * @param bi pre-set value {@code BigInteger} argument
+     * @param bi a {@code BigInteger} argument that represents {@code this}
+     *           SRP-6 Integer Variable
      */
-    public SRP6PresetIntegerVariable(final BigInteger bi) {
+    public SRP6CustomIntegerVariable(final BigInteger bi) {
         this(() -> bi.toByteArray(), BIG_ENDIAN);
     }
 
     /**
-     * Creates a new Pre-Set SRP-6 Integer Variable from the specified byte
+     * Creates a new Custom SRP-6 Integer Variable from the specified byte
      * sequence and the desired byte {@code order}.
      *
-     * @param bytes pre-set byte sequence that represents {@code this}
+     * @param bytes the byte sequence that represents {@code this}
      *              SRP-6 Integer Variable
      * @param order the byte order of {@code bytes}
      */
     @SuppressWarnings("checkstyle:hiddenfield")
-    public SRP6PresetIntegerVariable(
+    public SRP6CustomIntegerVariable(
         final Bytes bytes,
         final ByteOrder order
     ) {

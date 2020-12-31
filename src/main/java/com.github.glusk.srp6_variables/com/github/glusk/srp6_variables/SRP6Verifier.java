@@ -52,6 +52,6 @@ public final class SRP6Verifier implements SRP6IntegerVariable {
 
         BigInteger v = g.modPow(x, N);
 
-        return new SRP6PresetIntegerVariable(v).bytes(preferredOrder);
+        return new SRP6CustomIntegerVariable(v).bytes(preferredOrder);
     }
 }

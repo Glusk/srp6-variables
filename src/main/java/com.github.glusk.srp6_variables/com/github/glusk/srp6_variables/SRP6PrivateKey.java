@@ -42,7 +42,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * <pre>
  * // ByteOrder byteOrder = ...
  * SRP6IntegerVariable x =
- *     new SRP6PresetIntegerVariable(
+ *     new SRP6CustomIntegerVariable(
  *         new Hash(
  *             // custom args
  *         ),
@@ -121,7 +121,7 @@ public final class SRP6PrivateKey implements SRP6IntegerVariable {
         final ByteOrder endianness
     ) {
         this(
-            new SRP6PresetIntegerVariable(
+            new SRP6CustomIntegerVariable(
                 new Hash(hashFunction, salt, password),
                 endianness
             )

@@ -47,7 +47,7 @@ public final class SRP6PrivateKeyTest {
         throws NoSuchAlgorithmException {
         assertTrue(
             new WikiPrivateKey().equals(
-                new SRP6PresetIntegerVariable(
+                new SRP6CustomIntegerVariable(
                     new Hash(
                         new ImmutableMessageDigest(
                             MessageDigest.getInstance("SHA-256")
