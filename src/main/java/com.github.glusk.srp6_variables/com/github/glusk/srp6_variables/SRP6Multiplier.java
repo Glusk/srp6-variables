@@ -67,7 +67,7 @@ public final class SRP6Multiplier implements SRP6IntegerVariable {
      * <p>
      * Users should not be able to set this variable directly. Constants and
      * preset values must be created by using the
-     * {@link SRP6PresetIntegerVariable} class.
+     * {@link SRP6CustomIntegerVariable} class.
      *
      * @param multiplier SRP-6 Integer Variable: multiplier parameter (k)
      */
