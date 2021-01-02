@@ -29,7 +29,7 @@ public final class SRP6Multiplier implements SRP6IntegerVariable {
     /**
      * Constructs a new SRP-6 Multiplier Parameter as specified in RFC 5054.
      * <pre>
-     * u = H(N | PAD(g))
+     * k = H(N | PAD(g))
      * </pre>
      * <strong>Note:</strong> {@code g} is zero-padded to the byte length of
      * {@code N}.
