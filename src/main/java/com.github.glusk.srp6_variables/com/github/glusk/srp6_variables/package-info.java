@@ -16,8 +16,8 @@
  * v    Password verifier
  * ---
  * M1,M2  Proofs of session key
- * S      Session key
- * K      Hashed session key
+ * S      Shared secret (also "premaster secret")
+ * K      Session key
  * </pre>
  * <p>
  * We can roughly divide the variables into 2 groups:
