@@ -22,14 +22,18 @@ public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
     private final SRP6IntegerVariable scramblingParameter;
 
     /**
-     * Constructs a new SRP-6 Random Scrambling Parameter.
+     * Constructs a new SRP-6 Random Scrambling Parameter as specified in
+     * RFC 5054.
      * <pre>
-     * u = H(A | B)
+     * u = H(PAD(A) | PAD(B))
      * </pre>
+     * <strong>Note:</strong> {@code A} and {@code B} are zero-padded to the
+     * byte length of {@code N}.
      *
      * @param hashFunction a one-way hash function - H()
      * @param clientPublicKey SRP-6 variable: client public key (A)
      * @param serverPublicKey SRP-6 variable: server public key (B)
+     * @param prime SRP-6 variable: prime (N)
      * @param endianness the byte order to use when converting the resulting
      *                   hash to integer and the byte order of public keys'
      *                   byte sequences to feed to the hash function
@@ -38,14 +42,21 @@ public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
         final ImmutableMessageDigest hashFunction,
         final SRP6IntegerVariable clientPublicKey,
         final SRP6IntegerVariable serverPublicKey,
+        final SRP6IntegerVariable prime,
         final ByteOrder endianness
     ) {
         this(
             new SRP6CustomIntegerVariable(
                 new Hash(
                     hashFunction,
-                    clientPublicKey.bytes(endianness),
-                    serverPublicKey.bytes(endianness)
+                    clientPublicKey.bytes(
+                        endianness,
+                        prime.bytes(endianness).asArray().length
+                    ),
+                    serverPublicKey.bytes(
+                        endianness,
+                        prime.bytes(endianness).asArray().length
+                    )
                 ),
                 endianness
             )
