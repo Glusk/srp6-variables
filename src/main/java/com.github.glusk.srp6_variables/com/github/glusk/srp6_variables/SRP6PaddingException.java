@@ -5,7 +5,7 @@ package com.github.glusk.srp6_variables;
  * <p>
  * This exception indicates a padding error.
  */
-public final class SRP6PaddingException extends RuntimeException {
+public final class SRP6PaddingException extends SRP6Exception {
     /**
      * Creates a new SRP-6 Padding Exception.
      *

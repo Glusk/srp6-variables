@@ -23,7 +23,7 @@ import com.github.glusk.srp6_variables.wiki.WikiPrime;
 public final class SRP6MultiplierTest {
     @Test
     public void testAgainstRFC5054TestVectors()
-        throws NoSuchAlgorithmException {
+        throws NoSuchAlgorithmException, SRP6PaddingException {
         assertTrue(
             new RFC5054Multiplier().equals(
                 new SRP6Multiplier(

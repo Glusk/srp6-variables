@@ -24,7 +24,7 @@ import com.github.glusk.srp6_variables.wiki.WikiServerPublicKey;
 public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstRFC5054TestVectors()
-        throws NoSuchAlgorithmException {
+        throws NoSuchAlgorithmException, SRP6PaddingException {
         assertTrue(
             new RFC5054ScramblingParameter().equals(
                 new SRP6ScramblingParameter(

@@ -40,13 +40,15 @@ public final class SRP6Multiplier implements SRP6IntegerVariable {
      * @param endianness the byte order to use when converting the resulting
      *                   hash to integer and the byte order of prime and
      *                   generator byte sequences to feed to the hash function
+     * @throws SRP6PaddingException if byte length of {@code N} is shorter
+     *                              than the byte length of {@code g}
      */
     public SRP6Multiplier(
         final ImmutableMessageDigest hashFunction,
         final SRP6IntegerVariable prime,
         final SRP6IntegerVariable generator,
         final ByteOrder endianness
-    ) {
+    ) throws SRP6PaddingException {
         this(
             new SRP6CustomIntegerVariable(
                 new Hash(
