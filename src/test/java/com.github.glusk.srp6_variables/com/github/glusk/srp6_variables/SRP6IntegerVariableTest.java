@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public final class SRP6IntegerVariableTest {
     @Test
-    public void zeroPadsBigEndianToSize() {
+    public void zeroPadsBigEndianToSize() throws SRP6PaddingException {
         assertArrayEquals(
             new byte[] {0, 0, 1, 2, 0},
             new SRP6IntegerVariable() {
@@ -27,7 +27,7 @@ public final class SRP6IntegerVariableTest {
         );
     }
     @Test
-    public void zeroPadsLittleEndianToSize() {
+    public void zeroPadsLittleEndianToSize() throws SRP6PaddingException {
         assertArrayEquals(
             new byte[] {0, 2, 1, 0, 0},
             new SRP6IntegerVariable() {

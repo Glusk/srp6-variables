@@ -37,6 +37,9 @@ public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
      * @param endianness the byte order to use when converting the resulting
      *                   hash to integer and the byte order of public keys'
      *                   byte sequences to feed to the hash function
+     * @throws SRP6PaddingException if byte length of {@code N} is shorter
+     *                              than the byte length of either {@code A} or
+     *                              {@code B}
      */
     public SRP6ScramblingParameter(
         final ImmutableMessageDigest hashFunction,
@@ -44,7 +47,7 @@ public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
         final SRP6IntegerVariable serverPublicKey,
         final SRP6IntegerVariable prime,
         final ByteOrder endianness
-    ) {
+    ) throws SRP6PaddingException {
         this(
             new SRP6CustomIntegerVariable(
                 new Hash(
