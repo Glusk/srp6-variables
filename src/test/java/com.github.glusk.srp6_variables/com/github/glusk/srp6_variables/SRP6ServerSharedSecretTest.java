@@ -31,7 +31,7 @@ public final class SRP6ServerSharedSecretTest {
         );
     }
     @Test
-    public void failsIfClientPublicKeyIsZero() throws SRP6SecurityException {
+    public void failsIfClientPublicKeyIsZero() {
         assertThrows(
             SRP6SecurityException.class,
             () -> {
@@ -48,8 +48,7 @@ public final class SRP6ServerSharedSecretTest {
         );
     }
      @Test
-    public void failsIfClientPublicKeyEqualsToPrime()
-        throws SRP6SecurityException {
+    public void failsIfClientPublicKeyEqualsToPrime() {
         assertThrows(
             SRP6SecurityException.class,
             () -> {
