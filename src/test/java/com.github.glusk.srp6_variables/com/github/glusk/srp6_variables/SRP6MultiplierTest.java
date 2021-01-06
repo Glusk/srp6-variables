@@ -20,6 +20,8 @@ import com.github.glusk.srp6_variables.wiki.WikiGenerator;
 import com.github.glusk.srp6_variables.wiki.WikiMultiplier;
 import com.github.glusk.srp6_variables.wiki.WikiPrime;
 
+import com.github.glusk.srp6_variables.wow.WoWMultiplier;
+
 public final class SRP6MultiplierTest {
     @Test
     public void testAgainstRFC5054TestVectors()
@@ -64,6 +66,15 @@ public final class SRP6MultiplierTest {
                 )
             ),
             "Computed variable does not match the Wikipedia example variable"
+        );
+    }
+    @Test
+    public void testAgainstWoWTestVectors() {
+        assertTrue(
+            new WoWMultiplier().equals(
+                new SRP6Multiplier()
+            ),
+            "Computed variable does not match the WoW Test Vector"
         );
     }
 }

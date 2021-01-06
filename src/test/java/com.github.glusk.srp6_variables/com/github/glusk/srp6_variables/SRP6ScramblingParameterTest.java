@@ -21,6 +21,11 @@ import com.github.glusk.srp6_variables.wiki.WikiClientPublicKey;
 import com.github.glusk.srp6_variables.wiki.WikiScramblingParameter;
 import com.github.glusk.srp6_variables.wiki.WikiServerPublicKey;
 
+import com.github.glusk.srp6_variables.wow.WoWClientPublicKey;
+import com.github.glusk.srp6_variables.wow.WoWPrime;
+import com.github.glusk.srp6_variables.wow.WoWScramblingParameter;
+import com.github.glusk.srp6_variables.wow.WoWServerPublicKey;
+
 public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstRFC5054TestVectors()
@@ -66,6 +71,24 @@ public final class SRP6ScramblingParameterTest {
                 )
             ),
             "Computed variable does not match the Wikipedia example variable"
+        );
+    }
+    @Test
+    public void testAgainstWoWTestVectors()
+        throws NoSuchAlgorithmException, SRP6PaddingException {
+        assertTrue(
+            new WoWScramblingParameter().equals(
+                new SRP6ScramblingParameter(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-1")
+                    ),
+                    new WoWClientPublicKey(),
+                    new WoWServerPublicKey(),
+                    new WoWPrime(),
+                    ByteOrder.LITTLE_ENDIAN
+                )
+            ),
+            "Computed variable does not match the WoW Test Vector"
         );
     }
 }

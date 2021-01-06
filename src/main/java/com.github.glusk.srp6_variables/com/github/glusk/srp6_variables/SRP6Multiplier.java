@@ -1,5 +1,6 @@
 package com.github.glusk.srp6_variables;
 
+import java.math.BigInteger;
 import java.nio.ByteOrder;
 
 import com.github.glusk.caesar.Bytes;
@@ -26,6 +27,16 @@ public final class SRP6Multiplier implements SRP6IntegerVariable {
     /** SRP-6 Integer Variable: multiplier parameter (k). */
     private final SRP6IntegerVariable multiplier;
 
+    /**
+     * Constructs a new SRP-6 Multiplier Parameter.
+     * <pre>
+     * k = 3
+     * </pre>
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
+    public SRP6Multiplier() {
+        this(new SRP6CustomIntegerVariable(BigInteger.valueOf(3)));
+    }
     /**
      * Constructs a new SRP-6 Multiplier Parameter as specified in RFC 5054.
      * <pre>
