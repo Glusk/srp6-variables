@@ -59,10 +59,8 @@ public final class SRP6ScramblingParameterTest {
                             new WikiClientPublicKey()
                                 .asNonNegativeBigInteger()
                                 .toString()
-                        ),
-                        new PlainText(":"),
-                        new PlainText(
-                            new WikiServerPublicKey()
+                          + ":"
+                          + new WikiServerPublicKey()
                                 .asNonNegativeBigInteger()
                                 .toString()
                         )

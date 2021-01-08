@@ -54,10 +54,8 @@ public final class SRP6MultiplierTest {
                             new WikiPrime()
                                 .asNonNegativeBigInteger()
                                 .toString()
-                        ),
-                        new PlainText(":"),
-                        new PlainText(
-                            new WikiGenerator()
+                          + ":"
+                          + new WikiGenerator()
                                 .asNonNegativeBigInteger()
                                 .toString()
                         )

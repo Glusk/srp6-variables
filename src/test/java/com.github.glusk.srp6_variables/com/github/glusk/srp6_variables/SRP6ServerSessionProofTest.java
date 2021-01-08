@@ -38,16 +38,12 @@ public final class SRP6ServerSessionProofTest {
                             new WikiClientPublicKey()
                                 .asNonNegativeBigInteger()
                                 .toString()
-                        ),
-                        new PlainText(":"),
-                        new PlainText(
-                            new WikiClientSessionProof()
+                          + ":"
+                          + new WikiClientSessionProof()
                                 .asNonNegativeBigInteger()
                                 .toString()
-                        ),
-                        new PlainText(":"),
-                        new PlainText(
-                            new WikiSessionKey()
+                          + ":"
+                          + new WikiSessionKey()
                                 .asNonNegativeBigInteger()
                                 .toString()
                         )
