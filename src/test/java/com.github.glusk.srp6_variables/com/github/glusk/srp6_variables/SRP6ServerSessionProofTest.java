@@ -20,6 +20,7 @@ import com.github.glusk.srp6_variables.wiki.WikiSessionKey;
 
 import com.github.glusk.srp6_variables.wow.WoWServerSessionProof;
 import com.github.glusk.srp6_variables.wow.WoWClientSessionProof;
+import com.github.glusk.srp6_variables.wow.WoWPrime;
 import com.github.glusk.srp6_variables.wow.WoWSessionKey;
 import com.github.glusk.srp6_variables.wow.WoWClientPublicKey;
 
@@ -56,13 +57,14 @@ public final class SRP6ServerSessionProofTest {
     }
     @Test
     public void testAgainstWoWTestVectors()
-        throws NoSuchAlgorithmException {
+        throws NoSuchAlgorithmException, SRP6PaddingException {
         assertArrayEquals(
             new WoWServerSessionProof().asArray(),
             new SRP6ServerSessionProof(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-1")
                 ),
+                new WoWPrime(),
                 new WoWClientPublicKey(),
                 new WoWClientSessionProof(),
                 new WoWSessionKey(),
