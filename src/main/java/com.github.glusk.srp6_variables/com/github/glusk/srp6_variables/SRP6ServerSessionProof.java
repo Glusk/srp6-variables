@@ -21,32 +21,40 @@ public final class SRP6ServerSessionProof implements Bytes {
     private final Bytes serverSessionProof;
 
     /**
-     * Creates a new SRP-6 Server Session Proof from the specified hash
-     * function, client's public key and its preferred byte order, client's
-     * session proof and session key.
+     * Creates a new SRP-6 Server Session Proof by zero-padding the client's
+     * public key.
      * <p>
-     * When converting client public key to a byte sequence, this constructor
-     * will use the <em>minimal</em> representation (see
-     * {@link SRP6IntegerVariable#bytes(ByteOrder)}).
+     * The formula used is as follows:
+     * <pre>
+     * M2 = H(PAD(A), M1, K)
+     * </pre>
+     * Client public key (A) is zero-padded to the byte length of prime (N).
      *
      * @param hashFunction a one-way hash function - H()
+     * @param prime SRP-6 Integer Variable: prime (N)
      * @param clientPublicKey SRP-6 Integer Variable: client public key (A)
      * @param clientProof SRP-6 Variable: client session proof (M1)
      * @param sessionKey SRP-6 Variable: session key (K)
      * @param byteOrder the byte order to use when converting
      *                  {@code clientPublicKey} to a byte sequence
+     * @throws SRP6PaddingException if byte length of {@code N} is shorter
+     *                              than the byte length of {@code A}
      */
     public SRP6ServerSessionProof(
         final ImmutableMessageDigest hashFunction,
+        final SRP6IntegerVariable prime,
         final SRP6IntegerVariable clientPublicKey,
         final Bytes clientProof,
         final Bytes sessionKey,
         final ByteOrder byteOrder
-    ) {
+    ) throws SRP6PaddingException {
         this(
             new Hash(
                 hashFunction,
-                clientPublicKey.bytes(byteOrder),
+                clientPublicKey.bytes(
+                    byteOrder,
+                    prime.bytes(byteOrder).asArray().length
+                ),
                 clientProof,
                 sessionKey
             )
