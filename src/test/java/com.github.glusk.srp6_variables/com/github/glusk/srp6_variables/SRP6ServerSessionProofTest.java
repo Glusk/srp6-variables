@@ -38,15 +38,12 @@ public final class SRP6ServerSessionProofTest {
                         new PlainText(
                             new WikiClientPublicKey()
                                 .asNonNegativeBigInteger()
-                                .toString()
                           + ":"
                           + new WikiClientSessionProof()
                                 .asNonNegativeBigInteger()
-                                .toString()
                           + ":"
                           + new WikiSessionKey()
                                 .asNonNegativeBigInteger()
-                                .toString()
                         )
                     ),
                     ByteOrder.BIG_ENDIAN

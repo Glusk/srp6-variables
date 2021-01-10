@@ -53,11 +53,9 @@ public final class SRP6MultiplierTest {
                         new PlainText(
                             new WikiPrime()
                                 .asNonNegativeBigInteger()
-                                .toString()
                           + ":"
                           + new WikiGenerator()
                                 .asNonNegativeBigInteger()
-                                .toString()
                         )
                     ),
                     ByteOrder.BIG_ENDIAN

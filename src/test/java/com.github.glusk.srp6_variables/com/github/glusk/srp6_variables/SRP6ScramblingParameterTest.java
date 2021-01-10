@@ -58,11 +58,9 @@ public final class SRP6ScramblingParameterTest {
                         new PlainText(
                             new WikiClientPublicKey()
                                 .asNonNegativeBigInteger()
-                                .toString()
                           + ":"
                           + new WikiServerPublicKey()
                                 .asNonNegativeBigInteger()
-                                .toString()
                         )
                     ),
                     ByteOrder.BIG_ENDIAN
