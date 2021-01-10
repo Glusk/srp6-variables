@@ -42,7 +42,7 @@
     <dependency>
       <groupId>com.github.glusk</groupId>
       <artifactId>caesar</artifactId>
-      <version>0.4.2</version>
+      <version>0.5.0</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -160,7 +160,7 @@
           <configuration>
             <sourcepath>${project.build.sourceDirectory}</sourcepath>
             <links>
-              <link>https://javadoc.io/doc/com.github.glusk/caesar/0.4.2</link>
+              <link>https://javadoc.io/doc/com.github.glusk/caesar/0.5.0</link>
             </links>
           </configuration>
           <executions>
