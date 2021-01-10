@@ -14,10 +14,10 @@ A Java library of cryptographic primitives required for the SRP-6 protocol.
 
 In order to use this library, you must first settle on a couple of constants:
 
-  - group parameters
-  - source of randomness
-  - hash function
-  - byte order
+-   group parameters
+-   source of randomness
+-   hash function
+-   byte order
 
 For the purposes of demonstration, the following constants will be used
 throughout this page:
@@ -71,7 +71,7 @@ SRP6IntegerVariable v = new SRP6Verifier(N, g, x);
 
 ### Client side authentication
 
-This example is based on the optimized message ordering [1]:
+This example is based on the optimized message ordering, as described [here][1]:
 
 First, client sends his or her username (`I`) to the server.
 
@@ -110,7 +110,7 @@ try {
 
 ### Server side authentication
 
-This example is based on the optimized message ordering [1]:
+This example is based on the optimized message ordering, as described [here][1]:
 
 First, the server receives client username (`I`).
 
@@ -149,9 +149,7 @@ and responds with `M2`.
 
 ## References
 
-1. WU, Thomas. *SRP-6: Improvements and Refinements to the Secure Remote Password Protocol* <br>
-   http://srp.stanford.edu/srp6.ps, 2002.
-  
+-   [1]: http://srp.stanford.edu/srp6.ps (WU, Thomas. *SRP-6: Improvements and Refinements to the Secure Remote Password Protocol*)
 ---
 
 ## Releases
