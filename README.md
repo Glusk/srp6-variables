@@ -147,9 +147,8 @@ try {
 ```
 and responds with `M2`.
 
-## References
+[1]: http://srp.stanford.edu/srp6.ps (WU, Thomas. *SRP-6: Improvements and Refinements to the Secure Remote Password Protocol*)
 
--   [1]: http://srp.stanford.edu/srp6.ps (WU, Thomas. *SRP-6: Improvements and Refinements to the Secure Remote Password Protocol*)
 ---
 
 ## Releases
