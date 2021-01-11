@@ -139,8 +139,8 @@ additional computations:
         SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
         SRP6IntegerVariable S = new ServerSharedSecret(N, A, v, u, b);
         Bytes K = new SessionKey(imd, S, byteOrder);
-        Bytes cM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
-        if (Arrays.equals(M1.asArray(), cM1.asArray())) {
+        Bytes sM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
+        if (Arrays.equals(M1.asArray(), sM1.asArray())) {
             throw new SRP6Exception("Client proof mismatch!");
         }
         Bytes M2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
