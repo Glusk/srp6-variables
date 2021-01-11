@@ -5,6 +5,9 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/4b28e7a9389046a98c42f6a6eaa00ad8)](https://www.codacy.com/gh/Glusk/srp6-variables/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Glusk/srp6-variables&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/Glusk/srp6-variables/badge.svg?branch=master)](https://coveralls.io/github/Glusk/srp6-variables?branch=master)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.glusk/srp6-variables/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.glusk/srp6-variables)
+[![javadoc](https://javadoc.io/badge2/com.github.glusk/srp6-variables/javadoc.svg)](https://javadoc.io/doc/com.github.glusk/srp6-variables)
+
 [![LoC](https://tokei.rs/b1/github/glusk/srp6-variables)](https://github.com/Glusk/srp6-variables)
 [![Hits-of-Code](https://hitsofcode.com/github/glusk/srp6-variables?branch=master)](https://hitsofcode.com/view/github/glusk/srp6-variables?branch=master)
 
