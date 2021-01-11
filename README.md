@@ -59,8 +59,8 @@ Say we want to create a new record of the form `<I, s, v>` for user `"alice"`
 with password `"password123"`:
 
 ``` java
-String I = new PlainText("alice");
-String P = new PlainText("password123");
+Bytes I = new PlainText("alice");
+Bytes P = new PlainText("password123");
 
 final byte[] salt = rng.generateSeed(32);
 Bytes s = () -> salt;
