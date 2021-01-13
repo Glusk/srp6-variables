@@ -65,8 +65,8 @@ public interface SRP6IntegerVariable {
      * @param length the length of the zero-padded byte sequence to return
      * @return a new zero-padded byte sequence that represents {@code this}
      *         SRP-6 Integer Variable in the preferred byte order
-     * @throws SRP6PaddingException if {@code length} is less than or equal to
-     *                              the length of the sequence returned by
+     * @throws SRP6PaddingException if {@code length} is less than the length
+     *                              of the sequence returned by
      *                     {@link #bytes(ByteOrder) this.bytes(preferredOrder)}
      */
     default Bytes bytes(ByteOrder preferredOrder, int length)
