@@ -122,7 +122,7 @@ This example is based on the optimized message ordering, as described [here][1]:
     ``` java
     try {
         Bytes cM2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
-        if (Arrays.equals(M2.asArray(), cM2.asArray())) {
+        if (!Arrays.equals(M2.asArray(), cM2.asArray())) {
             throw new SRP6Exception("Server proof mismatch!");
         }
     } catch (SRP6Exception e) {
@@ -159,7 +159,7 @@ additional computations:
         SRP6IntegerVariable S = new ServerSharedSecret(N, A, v, u, b);
         Bytes K = new SessionKey(imd, S, byteOrder);
         Bytes sM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
-        if (Arrays.equals(M1.asArray(), sM1.asArray())) {
+        if (!Arrays.equals(M1.asArray(), sM1.asArray())) {
             throw new SRP6Exception("Client proof mismatch!");
         }
         Bytes M2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
