@@ -11,7 +11,8 @@
 [![LoC](https://tokei.rs/b1/github/glusk/srp6-variables)](https://github.com/Glusk/srp6-variables)
 [![Hits-of-Code](https://hitsofcode.com/github/glusk/srp6-variables?branch=master)](https://hitsofcode.com/view/github/glusk/srp6-variables?branch=master)
 
-A Java library of cryptographic primitives required for the SRP-6 protocol.
+A Java library of cryptographic primitives required to implement the SRP-6
+protocol, built with [Caesar](https://github.com/Glusk/caesar).
 
 ## Motivation
 
