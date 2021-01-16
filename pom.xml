@@ -8,7 +8,10 @@
   <version>1.0.1-SNAPSHOT</version>
 
   <name>SRP-6 Variables</name>
-  <description>A Java library of cryptographic primitives required for the SRP-6 protocol.</description>
+  <description>
+    A Java library of cryptographic primitives required for the implementation
+    of the SRP-6 protocol.
+  </description>
   <url>https://github.com/Glusk/srp6-variables</url>
 
   <licenses>
