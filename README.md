@@ -13,6 +13,24 @@
 
 A Java library of cryptographic primitives required for the SRP-6 protocol.
 
+## Motivation
+
+Some of the existing open source SRP-6 Java libraries include:
+- [Randgalt/srpforjava](https://github.com/Randgalt/srpforjava)
+- [Bouncy Castle Provider
+](https://search.maven.org/artifact/org.bouncycastle/bcprov-jdk15to18/1.68/pom)
+  - [org.bouncycastle.tls.crypto.impl.jcajce.srp](https://github.com/bcgit/bc-java/tree/master/tls/src/main/java/org/bouncycastle/tls/crypto/impl/jcajce/srp)
+- [Nimbus SRP6a](https://search.maven.org/artifact/com.nimbusds/srp6a/2.1.0/pom)
+- [SRP6 for C# and Java](https://sourceforge.net/projects/srp6-for-csharp-and-java/)
+- [GNU Crypto](https://search.maven.org/artifact/org.gnu/gnu-crypto/2.0.1/pom)
+  - [gnu.crypto.key.srp6](http://cvs.savannah.gnu.org/viewvc/gnu-crypto/gnu-crypto/source/gnu/crypto/key/srp6/?hideattic=0)
+
+What I've found is that such libraries are not easy to extend.
+
+Most of them work only with *big-endian* byte array representations and some of them aren't compliant with [RFC 5054](https://tools.ietf.org/html/rfc5054).
+
+With that in mind, I decided to create a library of basic building blocks (_**SRP-6 Variables**_) that one can use to implement the protocol.
+
 ## Usage
 
 In order to use this library, you must first settle on a couple of constants:
