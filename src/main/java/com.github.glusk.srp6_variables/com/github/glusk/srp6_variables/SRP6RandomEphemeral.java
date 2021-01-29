@@ -70,7 +70,7 @@ public final class SRP6RandomEphemeral implements SRP6IntegerVariable {
     public Bytes bytes(final ByteOrder preferredOrder) {
         if (cached == null) {
             /*
-             The algorithm is takes ideas from the Stanford's SRP Java library
+             The algorithm takes ideas from the Stanford's SRP Java library
              (srp-2.1.2), available at: http://srp.stanford.edu/download.html
              */
             BigInteger N = prime.asNonNegativeBigInteger();
