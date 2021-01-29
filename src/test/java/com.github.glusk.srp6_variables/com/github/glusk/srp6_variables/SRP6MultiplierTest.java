@@ -16,6 +16,10 @@ import com.github.glusk.srp6_variables.rfc5054.RFC5054Generator;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Multiplier;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Prime;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaGenerator;
+import com.github.glusk.srp6_variables.mozilla.MozillaMultiplier;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
+
 import com.github.glusk.srp6_variables.wiki.WikiGenerator;
 import com.github.glusk.srp6_variables.wiki.WikiMultiplier;
 import com.github.glusk.srp6_variables.wiki.WikiPrime;
@@ -38,6 +42,23 @@ public final class SRP6MultiplierTest {
                 )
             ),
             "Computed variable does not match the RFC5054 Test Vector"
+        );
+    }
+    @Test
+    public void testAgainstMozillaTestVectors()
+        throws NoSuchAlgorithmException, SRP6PaddingException {
+        assertTrue(
+            new MozillaMultiplier().equals(
+                new SRP6Multiplier(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
+                    ),
+                    new MozillaPrime(),
+                    new MozillaGenerator(),
+                    ByteOrder.BIG_ENDIAN
+                )
+            ),
+            "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test
