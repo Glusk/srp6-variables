@@ -21,7 +21,7 @@ import com.github.glusk.caesar.Bytes;
  * The bit-length of this variable will be at least 256 bits, as recommended in:
  * <a href="https://tools.ietf.org/html/rfc5054#section-3">RFC 5054 | 3.  Security Considerations</a>.
  * <p>
- * This class is thread-safe.
+ * This class is not thread-safe.
  */
 public final class SRP6RandomEphemeral implements SRP6IntegerVariable {
     /** The minimal bit length recommended in RFC 5054. */
@@ -67,10 +67,10 @@ public final class SRP6RandomEphemeral implements SRP6IntegerVariable {
 
     @Override
     @SuppressWarnings("checkstyle:localvariablename")
-    public synchronized Bytes bytes(final ByteOrder preferredOrder) {
+    public Bytes bytes(final ByteOrder preferredOrder) {
         if (cached == null) {
             /*
-             The algorithm is takes ideas from the Stanford's SRP Java library
+             The algorithm takes ideas from the Stanford's SRP Java library
              (srp-2.1.2), available at: http://srp.stanford.edu/download.html
              */
             BigInteger N = prime.asNonNegativeBigInteger();
