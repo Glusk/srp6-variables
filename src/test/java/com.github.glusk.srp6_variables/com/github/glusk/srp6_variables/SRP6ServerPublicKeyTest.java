@@ -11,6 +11,13 @@ import com.github.glusk.srp6_variables.rfc5054.RFC5054ServerPublicKey;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Prime;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Verifier;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaGenerator;
+import com.github.glusk.srp6_variables.mozilla.MozillaMultiplier;
+import com.github.glusk.srp6_variables.mozilla.MozillaServerPrivateEphemeral;
+import com.github.glusk.srp6_variables.mozilla.MozillaServerPublicKey;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
+import com.github.glusk.srp6_variables.mozilla.MozillaVerifier;
+
 import com.github.glusk.srp6_variables.wow.WoWGenerator;
 import com.github.glusk.srp6_variables.wow.WoWMultiplier;
 import com.github.glusk.srp6_variables.wow.WoWServerPrivateEphemeral;
@@ -32,6 +39,21 @@ public final class SRP6ServerPublicKeyTest {
                 )
             ),
             "Computed variable does not match the RFC5054 Test Vector"
+        );
+    }
+    @Test
+    public void testAgainstMozillaTestVectors() {
+        assertTrue(
+            new MozillaServerPublicKey().equals(
+                new SRP6ServerPublicKey(
+                    new MozillaPrime(),
+                    new MozillaGenerator(),
+                    new MozillaMultiplier(),
+                    new MozillaVerifier(),
+                    new MozillaServerPrivateEphemeral()
+                )
+            ),
+            "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test

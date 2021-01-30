@@ -17,6 +17,11 @@ import com.github.glusk.srp6_variables.rfc5054.RFC5054Password;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054PrivateKey;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054Salt;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaIdentity;
+import com.github.glusk.srp6_variables.mozilla.MozillaPassword;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrivateKey;
+import com.github.glusk.srp6_variables.mozilla.MozillaSalt;
+
 import com.github.glusk.srp6_variables.wiki.WikiIdentity;
 import com.github.glusk.srp6_variables.wiki.WikiPassword;
 import com.github.glusk.srp6_variables.wiki.WikiPrivateKey;
@@ -46,7 +51,24 @@ public final class SRP6PrivateKeyTest {
             "Computed variable does not match the RFC5054 Test Vector"
         );
     }
-
+    @Test
+    public void testAgainstMozillaTestVectors()
+        throws NoSuchAlgorithmException {
+        assertTrue(
+            new MozillaPrivateKey().equals(
+                new SRP6PrivateKey(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
+                    ),
+                    new MozillaSalt(),
+                    new MozillaIdentity(),
+                    new MozillaPassword(),
+                    ByteOrder.BIG_ENDIAN
+                )
+            ),
+            "Computed variable does not match the Mozilla Test Vector"
+        );
+    }
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {

@@ -16,6 +16,15 @@ import com.github.glusk.srp6_variables.rfc5054.RFC5054ClientPrivateEphemeral;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054ScramblingParameter;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054PrivateKey;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaServerPublicKey;
+import com.github.glusk.srp6_variables.mozilla.MozillaSharedSecret;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
+import com.github.glusk.srp6_variables.mozilla.MozillaGenerator;
+import com.github.glusk.srp6_variables.mozilla.MozillaMultiplier;
+import com.github.glusk.srp6_variables.mozilla.MozillaClientPrivateEphemeral;
+import com.github.glusk.srp6_variables.mozilla.MozillaScramblingParameter;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrivateKey;
+
 public final class SRP6ClientSharedSecretTest {
     @Test
     public void testAgainstRFC5054TestVectors() throws SRP6SecurityException {
@@ -32,6 +41,23 @@ public final class SRP6ClientSharedSecretTest {
                 )
             ),
             "Computed variable does not match the RFC5054 Test Vector"
+        );
+    }
+    @Test
+    public void testAgainstMozillaTestVectors() throws SRP6SecurityException {
+        assertTrue(
+            new MozillaSharedSecret().equals(
+                new SRP6ClientSharedSecret(
+                    new MozillaPrime(),
+                    new MozillaGenerator(),
+                    new MozillaMultiplier(),
+                    new MozillaServerPublicKey(),
+                    new MozillaPrivateKey(),
+                    new MozillaScramblingParameter(),
+                    new MozillaClientPrivateEphemeral()
+                )
+            ),
+            "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test

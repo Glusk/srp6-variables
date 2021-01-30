@@ -13,6 +13,12 @@ import com.github.glusk.caesar.PlainText;
 import com.github.glusk.caesar.hashing.Hash;
 import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaServerSessionProof;
+import com.github.glusk.srp6_variables.mozilla.MozillaClientSessionProof;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
+import com.github.glusk.srp6_variables.mozilla.MozillaSharedSecret;
+import com.github.glusk.srp6_variables.mozilla.MozillaClientPublicKey;
+
 import com.github.glusk.srp6_variables.wiki.WikiServerSessionProof;
 import com.github.glusk.srp6_variables.wiki.WikiClientPublicKey;
 import com.github.glusk.srp6_variables.wiki.WikiClientSessionProof;
@@ -25,6 +31,24 @@ import com.github.glusk.srp6_variables.wow.WoWSessionKey;
 import com.github.glusk.srp6_variables.wow.WoWClientPublicKey;
 
 public final class SRP6ServerSessionProofTest {
+    @Test
+    public void testAgainstMozillaTestVectors()
+        throws NoSuchAlgorithmException, SRP6PaddingException {
+        assertArrayEquals(
+            new MozillaServerSessionProof().asArray(),
+            new SRP6ServerSessionProof(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-256")
+                ),
+                new MozillaPrime(),
+                new MozillaClientPublicKey(),
+                new MozillaClientSessionProof(),
+                new MozillaSharedSecret(),
+                ByteOrder.BIG_ENDIAN
+            ).asArray(),
+            "Computed variable does not match the Mozilla Test Vector"
+        );
+    }
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {

@@ -17,6 +17,11 @@ import com.github.glusk.srp6_variables.rfc5054.RFC5054Prime;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054ScramblingParameter;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054ServerPublicKey;
 
+import com.github.glusk.srp6_variables.mozilla.MozillaClientPublicKey;
+import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
+import com.github.glusk.srp6_variables.mozilla.MozillaScramblingParameter;
+import com.github.glusk.srp6_variables.mozilla.MozillaServerPublicKey;
+
 import com.github.glusk.srp6_variables.wiki.WikiClientPublicKey;
 import com.github.glusk.srp6_variables.wiki.WikiScramblingParameter;
 import com.github.glusk.srp6_variables.wiki.WikiServerPublicKey;
@@ -43,6 +48,24 @@ public final class SRP6ScramblingParameterTest {
                 )
             ),
             "Computed variable does not match the RFC5054 Test Vector"
+        );
+    }
+    @Test
+    public void testAgainstMozillaTestVectors()
+        throws NoSuchAlgorithmException, SRP6PaddingException {
+        assertTrue(
+            new MozillaScramblingParameter().equals(
+                new SRP6ScramblingParameter(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
+                    ),
+                    new MozillaClientPublicKey(),
+                    new MozillaServerPublicKey(),
+                    new MozillaPrime(),
+                    ByteOrder.BIG_ENDIAN
+                )
+            ),
+            "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test

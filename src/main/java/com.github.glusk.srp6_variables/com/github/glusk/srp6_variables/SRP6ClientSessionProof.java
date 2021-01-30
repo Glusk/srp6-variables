@@ -10,10 +10,14 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
 /**
  * SRP-6 Client Session Proof (M1).
  * <p>
- * This variable is computed as:
- * <pre>
- * M1 = H(H(N) xor H(g), H(I), s, A, B, K)
- * </pre>
+ * This variable is computed as either (1):
+ * <pre> M1 = H(H(N) xor H(g), H(I), s, A, B, K) </pre>
+ * or (2): <pre> M1 = H(A, B, S) </pre>
+ * Use (1) to prove a shared, strong session key {@code K}.
+ * <p>
+ * Use (2) in a password-only proof where the calculation of {@code K} can be
+ * skipped.
+ * <p>
  * Refer to the {@link com.github.glusk.srp6_variables package docs} for more
  * info on notation used.
  */
@@ -22,8 +26,8 @@ public final class SRP6ClientSessionProof implements Bytes {
     private final Bytes clientSessionProof;
 
     /**
-     * Creates a new SRP-6 Client Session Proof by zero-padding the client's
-     * and the server's public key.
+     * Creates a new SRP-6 Client Session Proof that proofs the existence of a
+     * shared, strong session key {@code K}.
      * <p>
      * The formula used is as follows:
      * <pre>
@@ -82,6 +86,55 @@ public final class SRP6ClientSessionProof implements Bytes {
                     prime.bytes(byteOrder).asArray().length
                 ),
                 sessionKey
+            )
+        );
+    }
+
+    /**
+     * Creates a new SRP-6 password-only Client Session Proof where the
+     * calculation of {@code K} can be skipped.
+     * <p>
+     * The formula used is as follows:
+     * <pre>
+     * M1 = H(PAD(A), PAD(B), PAD(S))
+     * </pre>
+     * Client public key (A), server public key (B) and shared secret (S) are
+     * zero-padded to the byte length of prime (N).
+     *
+     * @param hashFunction a one-way hash function - H()
+     * @param prime SRP-6 Integer Variable: prime (N)
+     * @param clientPublicKey SRP-6 Integer Variable: client public key (A)
+     * @param serverPublicKey SRP-6 Integer Variable: server public key (B)
+     * @param sharedSecret SRP-6 Variable: shared secret (S)
+     * @param byteOrder the byte order to use when converting SRP-6 Integer
+     *                  Variables to a byte sequence
+     * @throws SRP6PaddingException if byte length of {@code N} is shorter
+     *                              than the byte length of either {@code A},
+     *                              {@code B} or {@code S}
+     */
+    public SRP6ClientSessionProof(
+        final ImmutableMessageDigest hashFunction,
+        final SRP6IntegerVariable prime,
+        final SRP6IntegerVariable clientPublicKey,
+        final SRP6IntegerVariable serverPublicKey,
+        final SRP6IntegerVariable sharedSecret,
+        final ByteOrder byteOrder
+    ) throws SRP6PaddingException {
+        this(
+            new Hash(
+                hashFunction,
+                clientPublicKey.bytes(
+                    byteOrder,
+                    prime.bytes(byteOrder).asArray().length
+                ),
+                serverPublicKey.bytes(
+                    byteOrder,
+                    prime.bytes(byteOrder).asArray().length
+                ),
+                sharedSecret.bytes(
+                    byteOrder,
+                    prime.bytes(byteOrder).asArray().length
+                )
             )
         );
     }
