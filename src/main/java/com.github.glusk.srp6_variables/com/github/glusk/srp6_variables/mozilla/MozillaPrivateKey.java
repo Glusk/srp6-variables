@@ -11,7 +11,6 @@ import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 /** Mozilla Test Vector: private key (x). */
 public final class MozillaPrivateKey implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
-    @SuppressWarnings("checkstyle:linelength")
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(
             new Hex(

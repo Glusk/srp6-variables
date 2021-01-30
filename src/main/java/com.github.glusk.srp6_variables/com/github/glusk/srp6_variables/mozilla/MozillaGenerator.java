@@ -15,7 +15,6 @@ import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
  */
 public final class MozillaGenerator implements SRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
-    @SuppressWarnings("checkstyle:linelength")
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(
             BigInteger.valueOf(2)
