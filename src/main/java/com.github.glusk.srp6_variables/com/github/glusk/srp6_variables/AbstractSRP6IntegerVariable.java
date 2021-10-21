@@ -38,4 +38,18 @@ public abstract class AbstractSRP6IntegerVariable
         Bytes b1 = that.bytes(ByteOrder.BIG_ENDIAN);
         return b0.equals(b1);
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <strong>Implementation Note:</strong><br>
+     * The hash code of an SRP-6 Integer Variable is defined as:
+     * <pre>
+     * this.bytes(ByteOrder.BIG_ENDIAN).hashCode();
+     * </pre>
+     */
+    @Override
+    public int hashCode() {
+        return this.bytes(ByteOrder.BIG_ENDIAN).hashCode();
+    }
 }

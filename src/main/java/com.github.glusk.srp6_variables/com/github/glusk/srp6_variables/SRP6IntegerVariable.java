@@ -146,4 +146,17 @@ public interface SRP6IntegerVariable {
      */
     @Override
     boolean equals(Object obj);
+
+    /**
+     * Returns the hash code value for this SRP-6 Integer Variable.
+     * <p>
+     * The hash code of an SRP-6 Integer Variable has to obey the general
+     * contract of {@link Object#hashCode}. That is, if two
+     * SRP-6 Integer Variables are equal, then they must have the same hash
+     * code.
+     *
+     * @return the hash code value for this SRP-6 Integer Variable
+     */
+    @Override
+    int hashCode();
 }
