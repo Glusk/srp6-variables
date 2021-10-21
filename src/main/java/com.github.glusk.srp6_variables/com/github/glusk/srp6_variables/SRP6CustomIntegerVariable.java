@@ -33,7 +33,7 @@ public final class SRP6CustomIntegerVariable
      * Equivalent to:
      * <pre>
      * new SRP6CustomIntegerVariable(
-     *     () -&gt; bi.toByteArray(),
+     *     Bytes.wrapped(bi.toByteArray()),
      *     ByteOrder.BIG_ENDIAN
      * )
      * </pre>
@@ -42,7 +42,7 @@ public final class SRP6CustomIntegerVariable
      *           SRP-6 Integer Variable
      */
     public SRP6CustomIntegerVariable(final BigInteger bi) {
-        this(() -> bi.toByteArray(), BIG_ENDIAN);
+        this(Bytes.wrapped(bi.toByteArray()), BIG_ENDIAN);
     }
 
     /**
@@ -73,8 +73,7 @@ public final class SRP6CustomIntegerVariable
         while (i < tmp.length && tmp[i] == 0) {
             i++;
         }
-        final int offSet = i;
-        minimal = () -> Arrays.copyOfRange(tmp, offSet, tmp.length);
+        minimal = Bytes.wrapped(Arrays.copyOfRange(tmp, i, tmp.length));
 
         // (3) If reversed in (1), reverse again
         minimal = order.equals(BIG_ENDIAN) ? minimal : minimal.reversed();
