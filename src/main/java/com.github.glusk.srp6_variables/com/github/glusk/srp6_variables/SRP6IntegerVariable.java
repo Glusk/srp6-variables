@@ -130,4 +130,21 @@ public interface SRP6IntegerVariable {
                 that.bytes(ByteOrder.BIG_ENDIAN).asArray()
             );
     }
+
+    /**
+     * Compares the specified object with this SRP-6 Integer Variable for
+     * equality.
+     * <p>
+     * Returns {@code true} if and only if the specified object is also an
+     * SRP-6 Integer Variable and both SRP-6 Integer Variables map to the same
+     * byte sequence. The mapping provided by {@link #bytes(ByteOrder)} must
+     * be used.
+     *
+     * @param obj the object to be compared for equality with this
+     *            SRP-6 Integer Variable
+     * @return {@code true} if the specified object is equal to this
+     *         SRP-6 Integer Variable
+     */
+    @Override
+    boolean equals(Object obj);
 }
