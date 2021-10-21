@@ -2,7 +2,9 @@ package com.github.glusk.srp6_variables;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
 import java.nio.ByteOrder;
@@ -53,6 +55,38 @@ public final class SRP6CustomIntegerVariableTest {
                 ByteOrder.BIG_ENDIAN
             )
         );
+    }
+    @Test
+    public void sameObjectsEqual() {
+        SRP6IntegerVariable s0 =
+            new SRP6CustomIntegerVariable(
+                new byte[] {1, 2, 0},
+                ByteOrder.BIG_ENDIAN
+            );
+        assertTrue(s0.equals(s0));
+    }
+    @Test
+    public void comparisonToObjectOfAnotherTypeYieldsFalse() {
+        SRP6IntegerVariable s0 =
+            new SRP6CustomIntegerVariable(
+                new byte[] {1},
+                ByteOrder.BIG_ENDIAN
+            );
+        assertFalse(s0.equals("1"));
+    }
+    @Test
+    public void objectsThatEqualHaveSameHashCode() {
+        SRP6IntegerVariable s0 =
+            new SRP6CustomIntegerVariable(
+                new byte[] {1, 2, 0},
+                ByteOrder.BIG_ENDIAN
+            );
+        SRP6IntegerVariable s1 =
+            new SRP6CustomIntegerVariable(
+                new byte[] {1, 2, 0},
+                ByteOrder.BIG_ENDIAN
+            );
+        assertTrue(s0.equals(s1) && s0.hashCode() == s1.hashCode());
     }
     @Test
     public void trimsLeadingZeroes() {
