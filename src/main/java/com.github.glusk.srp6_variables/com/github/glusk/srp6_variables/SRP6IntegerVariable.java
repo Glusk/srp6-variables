@@ -90,7 +90,7 @@ public interface SRP6IntegerVariable {
 
         // perform zero-padding
         byte[] tmp = minimal.asArray();
-        Bytes zeroPadded = () -> Arrays.copyOfRange(tmp, 0, length);
+        Bytes zeroPadded = Bytes.wrapped(Arrays.copyOfRange(tmp, 0, length));
 
         // return the result
         if (preferredOrder.equals(ByteOrder.BIG_ENDIAN)) {
