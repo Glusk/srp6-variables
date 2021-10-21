@@ -32,7 +32,6 @@ import com.github.glusk.caesar.Bytes;
  * byte sequences and it is up to the protocol implementor which representation
  * to use.
  */
-@FunctionalInterface
 public interface SRP6IntegerVariable {
     /**
      * Returns {@code this} SRP-6 Integer Variable as a byte sequence in the
