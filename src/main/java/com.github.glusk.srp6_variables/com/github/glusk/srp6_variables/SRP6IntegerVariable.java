@@ -114,23 +114,6 @@ public interface SRP6IntegerVariable {
     }
 
     /**
-     * Returns {@code true} if and only if the minimal byte array
-     * representation of SRP-6 Integer Variables {@code this} and {@code that}
-     * equals.
-     *
-     * @param that the object to compare against
-     * @return {@code true} if SRP-6 Integer Variables equal, {@code false}
-     *          otherwise
-     */
-    default boolean equals(SRP6IntegerVariable that) {
-        return
-            Arrays.equals(
-                this.bytes(ByteOrder.BIG_ENDIAN).asArray(),
-                that.bytes(ByteOrder.BIG_ENDIAN).asArray()
-            );
-    }
-
-    /**
      * Compares the specified object with this SRP-6 Integer Variable for
      * equality.
      * <p>
