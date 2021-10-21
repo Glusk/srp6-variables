@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
@@ -42,8 +42,8 @@ public final class SRP6ClientSessionProofTest {
     @Test
     public void testAgainstMozillaTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertArrayEquals(
-            new MozillaClientSessionProof().asArray(),
+        assertEquals(
+            new MozillaClientSessionProof(),
             new SRP6ClientSessionProof(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-256")
@@ -53,7 +53,7 @@ public final class SRP6ClientSessionProofTest {
                 new MozillaServerPublicKey(),
                 new MozillaSharedSecret(),
                 ByteOrder.BIG_ENDIAN
-            ).asArray(),
+            ),
             "Computed variable does not match the Mozilla Test Vector"
         );
     }
@@ -119,8 +119,8 @@ public final class SRP6ClientSessionProofTest {
     @Test
     public void testAgainstWoWTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertArrayEquals(
-            new WoWClientSessionProof().asArray(),
+        assertEquals(
+            new WoWClientSessionProof(),
             new SRP6ClientSessionProof(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-1")
@@ -133,7 +133,7 @@ public final class SRP6ClientSessionProofTest {
                 new WoWServerPublicKey(),
                 new WoWSessionKey(),
                 ByteOrder.LITTLE_ENDIAN
-            ).asArray(),
+            ),
             "Computed variable does not match the WoW Test Vector"
         );
     }

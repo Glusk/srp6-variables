@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.PlainText;
 
 /** Mozilla Test Vector: cleartext username - identity (I). */
-public final class MozillaIdentity implements Bytes {
+public final class MozillaIdentity extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new PlainText("andré@example.org");

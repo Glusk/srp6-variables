@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.wow;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 /** WoW Test Vector: salt (s). */
-public final class WoWSalt implements Bytes {
+public final class WoWSalt extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

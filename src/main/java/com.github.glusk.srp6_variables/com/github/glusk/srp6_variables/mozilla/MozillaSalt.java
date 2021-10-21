@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 /** Mozilla Test Vector: srpSalt (s). */
-public final class MozillaSalt implements Bytes {
+public final class MozillaSalt extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

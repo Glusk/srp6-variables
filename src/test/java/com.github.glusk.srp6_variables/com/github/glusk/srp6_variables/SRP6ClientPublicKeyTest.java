@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,26 +17,24 @@ import com.github.glusk.srp6_variables.mozilla.MozillaPrime;
 public final class SRP6ClientPublicKeyTest {
     @Test
     public void testAgainstRFC5054TestVectors() {
-        assertTrue(
-            new RFC5054ClientPublicKey().equals(
-                new SRP6ClientPublicKey(
-                    new RFC5054Prime(),
-                    new RFC5054Generator(),
-                    new RFC5054ClientPrivateEphemeral()
-                )
+        assertEquals(
+            new RFC5054ClientPublicKey(),
+            new SRP6ClientPublicKey(
+                new RFC5054Prime(),
+                new RFC5054Generator(),
+                new RFC5054ClientPrivateEphemeral()
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
     }
     @Test
     public void testAgainstMozillaTestVectors() {
-        assertTrue(
-            new MozillaClientPublicKey().equals(
-                new SRP6ClientPublicKey(
-                    new MozillaPrime(),
-                    new MozillaGenerator(),
-                    new MozillaClientPrivateEphemeral()
-                )
+        assertEquals(
+            new MozillaClientPublicKey(),
+            new SRP6ClientPublicKey(
+                new MozillaPrime(),
+                new MozillaGenerator(),
+                new MozillaClientPrivateEphemeral()
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );

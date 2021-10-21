@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
 import java.security.MessageDigest;
@@ -36,17 +36,16 @@ public final class SRP6PrivateKeyTest {
     @Test
     public void testAgainstRFC5054TestVectors()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new RFC5054PrivateKey().equals(
-                new SRP6PrivateKey(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-1")
-                    ),
-                    new RFC5054Salt(),
-                    new RFC5054Identity(),
-                    new RFC5054Password(),
-                    ByteOrder.BIG_ENDIAN
-                )
+        assertEquals(
+            new RFC5054PrivateKey(),
+            new SRP6PrivateKey(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-1")
+                ),
+                new RFC5054Salt(),
+                new RFC5054Identity(),
+                new RFC5054Password(),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
@@ -54,17 +53,16 @@ public final class SRP6PrivateKeyTest {
     @Test
     public void testAgainstMozillaTestVectors()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new MozillaPrivateKey().equals(
-                new SRP6PrivateKey(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-256")
-                    ),
-                    new MozillaSalt(),
-                    new MozillaIdentity(),
-                    new MozillaPassword(),
-                    ByteOrder.BIG_ENDIAN
-                )
+        assertEquals(
+            new MozillaPrivateKey(),
+            new SRP6PrivateKey(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-256")
+                ),
+                new MozillaSalt(),
+                new MozillaIdentity(),
+                new MozillaPassword(),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );
@@ -72,25 +70,24 @@ public final class SRP6PrivateKeyTest {
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new WikiPrivateKey().equals(
-                new SRP6CustomIntegerVariable(
-                    new Hash(
-                        new ImmutableMessageDigest(
-                            MessageDigest.getInstance("SHA-256")
-                        ),
-                        new PlainText(
-                            new WikiSalt()
-                                .asNonNegativeBigInteger()
-                                .toString()
-                        ),
-                        new PlainText(":"),
-                        new WikiIdentity(),
-                        new PlainText(":"),
-                        new WikiPassword()
+        assertEquals(
+            new WikiPrivateKey(),
+            new SRP6CustomIntegerVariable(
+                new Hash(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
                     ),
-                    ByteOrder.BIG_ENDIAN
-                )
+                    new PlainText(
+                        new WikiSalt()
+                            .asNonNegativeBigInteger()
+                            .toString()
+                    ),
+                    new PlainText(":"),
+                    new WikiIdentity(),
+                    new PlainText(":"),
+                    new WikiPassword()
+                ),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Wikipedia example variable"
         );
@@ -98,17 +95,16 @@ public final class SRP6PrivateKeyTest {
     @Test
     public void testAgainstWoWTestVectors()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new WoWPrivateKey().equals(
-                new SRP6PrivateKey(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-1")
-                    ),
-                    new WoWSalt(),
-                    new WoWIdentity(),
-                    new WoWPassword(),
-                    ByteOrder.LITTLE_ENDIAN
-                )
+        assertEquals(
+            new WoWPrivateKey(),
+            new SRP6PrivateKey(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-1")
+                ),
+                new WoWSalt(),
+                new WoWIdentity(),
+                new WoWPassword(),
+                ByteOrder.LITTLE_ENDIAN
             ),
             "Computed variable does not match the WoW Test Vector"
         );

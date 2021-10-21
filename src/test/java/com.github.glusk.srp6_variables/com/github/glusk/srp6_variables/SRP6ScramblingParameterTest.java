@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
 import java.security.MessageDigest;
@@ -35,17 +35,16 @@ public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstRFC5054TestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertTrue(
-            new RFC5054ScramblingParameter().equals(
-                new SRP6ScramblingParameter(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-1")
-                    ),
-                    new RFC5054ClientPublicKey(),
-                    new RFC5054ServerPublicKey(),
-                    new RFC5054Prime(),
-                    ByteOrder.BIG_ENDIAN
-                )
+        assertEquals(
+            new RFC5054ScramblingParameter(),
+            new SRP6ScramblingParameter(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-1")
+                ),
+                new RFC5054ClientPublicKey(),
+                new RFC5054ServerPublicKey(),
+                new RFC5054Prime(),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
@@ -53,17 +52,16 @@ public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstMozillaTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertTrue(
-            new MozillaScramblingParameter().equals(
-                new SRP6ScramblingParameter(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-256")
-                    ),
-                    new MozillaClientPublicKey(),
-                    new MozillaServerPublicKey(),
-                    new MozillaPrime(),
-                    ByteOrder.BIG_ENDIAN
-                )
+        assertEquals(
+            new MozillaScramblingParameter(),
+            new SRP6ScramblingParameter(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-256")
+                ),
+                new MozillaClientPublicKey(),
+                new MozillaServerPublicKey(),
+                new MozillaPrime(),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );
@@ -71,23 +69,22 @@ public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new WikiScramblingParameter().equals(
-                new SRP6CustomIntegerVariable(
-                    new Hash(
-                        new ImmutableMessageDigest(
-                            MessageDigest.getInstance("SHA-256")
-                        ),
-                        new PlainText(
-                            new WikiClientPublicKey()
-                                .asNonNegativeBigInteger()
-                          + ":"
-                          + new WikiServerPublicKey()
-                                .asNonNegativeBigInteger()
-                        )
+        assertEquals(
+            new WikiScramblingParameter(),
+            new SRP6CustomIntegerVariable(
+                new Hash(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
                     ),
-                    ByteOrder.BIG_ENDIAN
-                )
+                    new PlainText(
+                        new WikiClientPublicKey()
+                            .asNonNegativeBigInteger()
+                        + ":"
+                        + new WikiServerPublicKey()
+                            .asNonNegativeBigInteger()
+                    )
+                ),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Wikipedia example variable"
         );
@@ -95,17 +92,16 @@ public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstWoWTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertTrue(
-            new WoWScramblingParameter().equals(
-                new SRP6ScramblingParameter(
-                    new ImmutableMessageDigest(
-                        MessageDigest.getInstance("SHA-1")
-                    ),
-                    new WoWClientPublicKey(),
-                    new WoWServerPublicKey(),
-                    new WoWPrime(),
-                    ByteOrder.LITTLE_ENDIAN
-                )
+        assertEquals(
+            new WoWScramblingParameter(),
+            new SRP6ScramblingParameter(
+                new ImmutableMessageDigest(
+                    MessageDigest.getInstance("SHA-1")
+                ),
+                new WoWClientPublicKey(),
+                new WoWServerPublicKey(),
+                new WoWPrime(),
+                ByteOrder.LITTLE_ENDIAN
             ),
             "Computed variable does not match the WoW Test Vector"
         );

@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.wiki;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.PlainText;
 
 /** Wikipedia Python example variable: cleartext password (P). */
-public final class WikiPassword implements Bytes {
+public final class WikiPassword extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new PlainText("password1234");
