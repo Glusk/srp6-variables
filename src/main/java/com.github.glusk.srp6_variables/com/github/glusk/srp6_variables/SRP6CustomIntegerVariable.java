@@ -47,6 +47,22 @@ public final class SRP6CustomIntegerVariable
 
     /**
      * Creates a new Custom SRP-6 Integer Variable from the specified byte
+     * array and the desired byte {@code order}.
+     *
+     * @param bytes the byte array that represents {@code this}
+     *              SRP-6 Integer Variable
+     * @param order the byte order of {@code bytes}
+     */
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public SRP6CustomIntegerVariable(
+        final byte[] bytes,
+        final ByteOrder order
+    ) {
+        this(Bytes.wrapped(bytes), order);
+    }
+
+    /**
+     * Creates a new Custom SRP-6 Integer Variable from the specified byte
      * sequence and the desired byte {@code order}.
      *
      * @param bytes the byte sequence that represents {@code this}
