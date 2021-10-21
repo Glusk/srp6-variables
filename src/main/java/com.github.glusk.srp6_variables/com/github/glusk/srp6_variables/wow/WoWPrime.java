@@ -5,11 +5,12 @@ import java.nio.ByteOrder;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** WoW Test Vector: prime (N). */
-public final class WoWPrime implements SRP6IntegerVariable {
+public final class WoWPrime extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(

@@ -17,7 +17,8 @@ import com.github.glusk.caesar.Bytes;
  * You can also use this class to instantiate a custom variable if none of the
  * other classes in this package seem suitable.
  */
-public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
+public final class SRP6CustomIntegerVariable
+    extends AbstractSRP6IntegerVariable {
     /**
      * The byte sequence that represents {@code this}
      * SRP-6 Integer Variable.

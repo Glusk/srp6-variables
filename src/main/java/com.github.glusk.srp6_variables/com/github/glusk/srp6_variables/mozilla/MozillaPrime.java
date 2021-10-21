@@ -5,6 +5,7 @@ import java.nio.ByteOrder;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
@@ -13,7 +14,7 @@ import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
  * <p>
  * A 2048-bit value from RFC 5054, Appendix A.
  */
-public final class MozillaPrime implements SRP6IntegerVariable {
+public final class MozillaPrime extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     @SuppressWarnings("checkstyle:linelength")
     private static final SRP6IntegerVariable VALUE =

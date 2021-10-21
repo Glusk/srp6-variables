@@ -17,7 +17,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * operator, {@code A} client's public key and {@code B} the server's public
  * key.
  */
-public final class SRP6ScramblingParameter implements SRP6IntegerVariable {
+public final class SRP6ScramblingParameter extends AbstractSRP6IntegerVariable {
     /** SRP-6 Integer Variable: random scrambling parameter (u). */
     private final SRP6IntegerVariable scramblingParameter;
 

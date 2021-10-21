@@ -5,11 +5,12 @@ import java.nio.ByteOrder;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** RFC5054 Test Vector: prime (N). */
-public final class RFC5054Prime implements SRP6IntegerVariable {
+public final class RFC5054Prime extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(

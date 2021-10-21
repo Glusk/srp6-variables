@@ -5,11 +5,12 @@ import java.nio.ByteOrder;
 
 import com.github.glusk.caesar.Bytes;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** WoW Test Vector: generator (g). */
-public final class WoWGenerator implements SRP6IntegerVariable {
+public final class WoWGenerator extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(
