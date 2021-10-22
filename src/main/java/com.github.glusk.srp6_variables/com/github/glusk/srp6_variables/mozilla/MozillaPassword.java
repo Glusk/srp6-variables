@@ -1,5 +1,6 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
@@ -16,7 +17,7 @@ import com.github.glusk.caesar.Hex;
  * This SRP-6 Variable represents that final stage, as key-stretching and
  * scrypt algorithm are out of scope of this project.
  */
-public final class MozillaPassword implements Bytes {
+public final class MozillaPassword extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

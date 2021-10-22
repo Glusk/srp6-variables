@@ -19,7 +19,7 @@ import com.github.glusk.caesar.Bytes;
  * Refer to the  {@link com.github.glusk.srp6_variables package docs} for more
  * info on notation used.
  */
-public final class SRP6ClientSharedSecret implements SRP6IntegerVariable {
+public final class SRP6ClientSharedSecret extends AbstractSRP6IntegerVariable {
     /** SRP-6 Integer Variable: prime (N). */
     private final SRP6IntegerVariable prime;
     /** SRP-6 Integer Variable: generator (g). */

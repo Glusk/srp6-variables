@@ -1,7 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +26,8 @@ public final class SRP6SessionKeyTest {
     @Test
     public void testAgainstMozillaExampleVariables()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertArrayEquals(
-            new MozillaSessionKey().asArray(),
+        assertEquals(
+            new MozillaSessionKey(),
             new Hash(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-256")
@@ -39,43 +38,42 @@ public final class SRP6SessionKeyTest {
                         ByteOrder.BIG_ENDIAN
                     ).asArray().length
                 )
-            ).asArray(),
+            ),
             "Computed variable does not match the Mozilla example variable"
         );
     }
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new WikiSessionKey().equals(
-                new SRP6CustomIntegerVariable(
-                    new Hash(
-                        new ImmutableMessageDigest(
-                            MessageDigest.getInstance("SHA-256")
-                        ),
-                        new PlainText(
-                            new WikiPremasterSecret()
-                                .asNonNegativeBigInteger()
-                                .toString()
-                        )
+        assertEquals(
+            new WikiSessionKey(),
+            new SRP6CustomIntegerVariable(
+                new Hash(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
                     ),
-                    ByteOrder.BIG_ENDIAN
-                )
+                    new PlainText(
+                        new WikiPremasterSecret()
+                            .asNonNegativeBigInteger()
+                            .toString()
+                    )
+                ),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Wikipedia example variable"
         );
     }
     @Test
     public void testAgainstWoWTestVectors() throws NoSuchAlgorithmException {
-        assertArrayEquals(
-            new WoWSessionKey().asArray(),
+        assertEquals(
+            new WoWSessionKey(),
             new SRP6SessionKey(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-1")
                 ),
                 new WoWPremasterSecret(),
                 ByteOrder.LITTLE_ENDIAN
-            ).asArray(),
+            ),
             "Computed variable does not match the WoW Test Vector"
         );
     }

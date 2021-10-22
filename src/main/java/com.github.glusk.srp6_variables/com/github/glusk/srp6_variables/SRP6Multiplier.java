@@ -23,7 +23,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * Refer to the  {@link com.github.glusk.srp6_variables package docs} for more
  * info on notation used.
  */
-public final class SRP6Multiplier implements SRP6IntegerVariable {
+public final class SRP6Multiplier extends AbstractSRP6IntegerVariable {
     /** SRP-6 Integer Variable: multiplier parameter (k). */
     private final SRP6IntegerVariable multiplier;
 

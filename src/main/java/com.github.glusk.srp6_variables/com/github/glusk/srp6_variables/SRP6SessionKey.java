@@ -2,7 +2,7 @@ package com.github.glusk.srp6_variables;
 
 import java.nio.ByteOrder;
 
-import com.github.glusk.caesar.Bytes;
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
 
 /**
@@ -20,7 +20,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * <p>
  * The underlying hash function need not be SHA-1.
  */
-public final class SRP6SessionKey implements Bytes {
+public final class SRP6SessionKey extends AbstractBytes {
     /**
      * The hash function used to perform the hashing inside the H_Interleave
      * algorithm.

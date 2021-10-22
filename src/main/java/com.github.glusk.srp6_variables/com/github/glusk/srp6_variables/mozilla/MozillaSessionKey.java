@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 /** Mozilla Test Vector: srpK (K). */
-public final class MozillaSessionKey implements Bytes {
+public final class MozillaSessionKey extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

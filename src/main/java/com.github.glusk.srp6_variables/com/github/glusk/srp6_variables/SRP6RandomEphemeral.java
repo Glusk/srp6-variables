@@ -23,7 +23,7 @@ import com.github.glusk.caesar.Bytes;
  * <p>
  * This class is not thread-safe.
  */
-public final class SRP6RandomEphemeral implements SRP6IntegerVariable {
+public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
     /** The minimal bit length recommended in RFC 5054. */
     private static final int MIN_BIT_LENGTH = 256;
 

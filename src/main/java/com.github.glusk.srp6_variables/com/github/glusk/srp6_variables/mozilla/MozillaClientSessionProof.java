@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 /** Mozilla Test Vector: client session proof (M1). */
-public final class MozillaClientSessionProof implements Bytes {
+public final class MozillaClientSessionProof extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

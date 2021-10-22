@@ -17,7 +17,8 @@ import com.github.glusk.caesar.Bytes;
  * You can also use this class to instantiate a custom variable if none of the
  * other classes in this package seem suitable.
  */
-public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
+public final class SRP6CustomIntegerVariable
+    extends AbstractSRP6IntegerVariable {
     /**
      * The byte sequence that represents {@code this}
      * SRP-6 Integer Variable.
@@ -32,7 +33,7 @@ public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
      * Equivalent to:
      * <pre>
      * new SRP6CustomIntegerVariable(
-     *     () -&gt; bi.toByteArray(),
+     *     Bytes.wrapped(bi.toByteArray()),
      *     ByteOrder.BIG_ENDIAN
      * )
      * </pre>
@@ -41,7 +42,31 @@ public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
      *           SRP-6 Integer Variable
      */
     public SRP6CustomIntegerVariable(final BigInteger bi) {
-        this(() -> bi.toByteArray(), BIG_ENDIAN);
+        this(Bytes.wrapped(bi.toByteArray()), BIG_ENDIAN);
+    }
+
+    /**
+     * Creates a new Custom SRP-6 Integer Variable from the specified byte
+     * array and the desired byte {@code order}.
+     * <p>
+     * Equivalent to:
+     * <pre>
+     * new SRP6CustomIntegerVariable(
+     *     Bytes.wrapped(bytes),
+     *     order
+     * )
+     * </pre>
+     *
+     * @param bytes the byte array that represents {@code this}
+     *              SRP-6 Integer Variable
+     * @param order the byte order of {@code bytes}
+     */
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public SRP6CustomIntegerVariable(
+        final byte[] bytes,
+        final ByteOrder order
+    ) {
+        this(Bytes.wrapped(bytes), order);
     }
 
     /**
@@ -72,8 +97,7 @@ public final class SRP6CustomIntegerVariable implements SRP6IntegerVariable {
         while (i < tmp.length && tmp[i] == 0) {
             i++;
         }
-        final int offSet = i;
-        minimal = () -> Arrays.copyOfRange(tmp, offSet, tmp.length);
+        minimal = Bytes.wrapped(Arrays.copyOfRange(tmp, i, tmp.length));
 
         // (3) If reversed in (1), reverse again
         minimal = order.equals(BIG_ENDIAN) ? minimal : minimal.reversed();

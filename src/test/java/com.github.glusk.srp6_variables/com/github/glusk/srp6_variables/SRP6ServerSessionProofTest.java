@@ -1,7 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.ByteOrder;
 import java.security.MessageDigest;
@@ -34,8 +33,8 @@ public final class SRP6ServerSessionProofTest {
     @Test
     public void testAgainstMozillaTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertArrayEquals(
-            new MozillaServerSessionProof().asArray(),
+        assertEquals(
+            new MozillaServerSessionProof(),
             new SRP6ServerSessionProof(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-256")
@@ -45,33 +44,32 @@ public final class SRP6ServerSessionProofTest {
                 new MozillaClientSessionProof(),
                 new MozillaSharedSecret(),
                 ByteOrder.BIG_ENDIAN
-            ).asArray(),
+            ),
             "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test
     public void testAgainstWikipediaExampleVariables()
         throws NoSuchAlgorithmException {
-        assertTrue(
-            new WikiServerSessionProof().equals(
-                new SRP6CustomIntegerVariable(
-                    new Hash(
-                        new ImmutableMessageDigest(
-                            MessageDigest.getInstance("SHA-256")
-                        ),
-                        new PlainText(
-                            new WikiClientPublicKey()
-                                .asNonNegativeBigInteger()
-                          + ":"
-                          + new WikiClientSessionProof()
-                                .asNonNegativeBigInteger()
-                          + ":"
-                          + new WikiSessionKey()
-                                .asNonNegativeBigInteger()
-                        )
+        assertEquals(
+            new WikiServerSessionProof(),
+            new SRP6CustomIntegerVariable(
+                new Hash(
+                    new ImmutableMessageDigest(
+                        MessageDigest.getInstance("SHA-256")
                     ),
-                    ByteOrder.BIG_ENDIAN
-                )
+                    new PlainText(
+                        new WikiClientPublicKey()
+                            .asNonNegativeBigInteger()
+                        + ":"
+                        + new WikiClientSessionProof()
+                            .asNonNegativeBigInteger()
+                        + ":"
+                        + new WikiSessionKey()
+                            .asNonNegativeBigInteger()
+                    )
+                ),
+                ByteOrder.BIG_ENDIAN
             ),
             "Computed variable does not match the Wikipedia example variable"
         );
@@ -79,8 +77,8 @@ public final class SRP6ServerSessionProofTest {
     @Test
     public void testAgainstWoWTestVectors()
         throws NoSuchAlgorithmException, SRP6PaddingException {
-        assertArrayEquals(
-            new WoWServerSessionProof().asArray(),
+        assertEquals(
+            new WoWServerSessionProof(),
             new SRP6ServerSessionProof(
                 new ImmutableMessageDigest(
                     MessageDigest.getInstance("SHA-1")
@@ -90,7 +88,7 @@ public final class SRP6ServerSessionProofTest {
                 new WoWClientSessionProof(),
                 new WoWSessionKey(),
                 ByteOrder.LITTLE_ENDIAN
-            ).asArray(),
+            ),
             "Computed variable does not match the WoW Test Vector"
         );
     }

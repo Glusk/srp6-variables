@@ -1,5 +1,6 @@
 package com.github.glusk.srp6_variables.mozilla;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
@@ -9,7 +10,7 @@ import com.github.glusk.caesar.Hex;
  * This value was derived from other test vectors - Mozilla does not
  * calculate it!
  */
-public final class MozillaServerSessionProof implements Bytes {
+public final class MozillaServerSessionProof extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

@@ -45,7 +45,7 @@
     <dependency>
       <groupId>com.github.glusk</groupId>
       <artifactId>caesar</artifactId>
-      <version>0.5.0</version>
+      <version>0.7.1</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

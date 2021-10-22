@@ -1,10 +1,11 @@
 package com.github.glusk.srp6_variables.wow;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
 /** WoW Test Vector: session key (K). */
-public final class WoWSessionKey implements Bytes {
+public final class WoWSessionKey extends AbstractBytes {
     /** Pre-set constant that represents this variable. */
     private static final Bytes VALUE =
         new Hex(

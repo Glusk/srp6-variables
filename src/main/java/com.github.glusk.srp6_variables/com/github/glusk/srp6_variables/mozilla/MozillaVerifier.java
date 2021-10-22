@@ -5,11 +5,12 @@ import java.nio.ByteOrder;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** Mozilla Test Vector: srpVerifier (v). */
-public final class MozillaVerifier implements SRP6IntegerVariable {
+public final class MozillaVerifier extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(

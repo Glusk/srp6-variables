@@ -5,12 +5,13 @@ import java.nio.ByteOrder;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.Hex;
 
+import com.github.glusk.srp6_variables.AbstractSRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6IntegerVariable;
 import com.github.glusk.srp6_variables.SRP6CustomIntegerVariable;
 
 /** WoW Test Vector: server ephemeral private key (b). */
 public final class WoWServerPrivateEphemeral
-    implements SRP6IntegerVariable {
+    extends AbstractSRP6IntegerVariable {
     /** Pre-set constant that represents this variable. */
     private static final SRP6IntegerVariable VALUE =
         new SRP6CustomIntegerVariable(

@@ -2,6 +2,7 @@ package com.github.glusk.srp6_variables;
 
 import java.nio.ByteOrder;
 
+import com.github.glusk.caesar.AbstractBytes;
 import com.github.glusk.caesar.Bytes;
 import com.github.glusk.caesar.hashing.Hash;
 import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
@@ -19,7 +20,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  * Refer to the {@link com.github.glusk.srp6_variables package docs} for more
  * info on notation used.
  */
-public final class SRP6ServerSessionProof implements Bytes {
+public final class SRP6ServerSessionProof extends AbstractBytes {
     /** SRP-6 Variable: server session proof (M2). */
     private final Bytes serverSessionProof;
 

@@ -1,7 +1,7 @@
 package com.github.glusk.srp6_variables;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,34 +28,32 @@ import com.github.glusk.srp6_variables.mozilla.MozillaPrivateKey;
 public final class SRP6ClientSharedSecretTest {
     @Test
     public void testAgainstRFC5054TestVectors() throws SRP6SecurityException {
-        assertTrue(
-            new RFC5054PremasterSecret().equals(
-                new SRP6ClientSharedSecret(
-                    new RFC5054Prime(),
-                    new RFC5054Generator(),
-                    new RFC5054Multiplier(),
-                    new RFC5054ServerPublicKey(),
-                    new RFC5054PrivateKey(),
-                    new RFC5054ScramblingParameter(),
-                    new RFC5054ClientPrivateEphemeral()
-                )
+        assertEquals(
+            new RFC5054PremasterSecret(),
+            new SRP6ClientSharedSecret(
+                new RFC5054Prime(),
+                new RFC5054Generator(),
+                new RFC5054Multiplier(),
+                new RFC5054ServerPublicKey(),
+                new RFC5054PrivateKey(),
+                new RFC5054ScramblingParameter(),
+                new RFC5054ClientPrivateEphemeral()
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
     }
     @Test
     public void testAgainstMozillaTestVectors() throws SRP6SecurityException {
-        assertTrue(
-            new MozillaSharedSecret().equals(
-                new SRP6ClientSharedSecret(
-                    new MozillaPrime(),
-                    new MozillaGenerator(),
-                    new MozillaMultiplier(),
-                    new MozillaServerPublicKey(),
-                    new MozillaPrivateKey(),
-                    new MozillaScramblingParameter(),
-                    new MozillaClientPrivateEphemeral()
-                )
+        assertEquals(
+            new MozillaSharedSecret(),
+            new SRP6ClientSharedSecret(
+                new MozillaPrime(),
+                new MozillaGenerator(),
+                new MozillaMultiplier(),
+                new MozillaServerPublicKey(),
+                new MozillaPrivateKey(),
+                new MozillaScramblingParameter(),
+                new MozillaClientPrivateEphemeral()
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );

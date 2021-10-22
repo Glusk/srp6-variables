@@ -32,7 +32,6 @@ import com.github.glusk.caesar.Bytes;
  * byte sequences and it is up to the protocol implementor which representation
  * to use.
  */
-@FunctionalInterface
 public interface SRP6IntegerVariable {
     /**
      * Returns {@code this} SRP-6 Integer Variable as a byte sequence in the
@@ -91,7 +90,7 @@ public interface SRP6IntegerVariable {
 
         // perform zero-padding
         byte[] tmp = minimal.asArray();
-        Bytes zeroPadded = () -> Arrays.copyOfRange(tmp, 0, length);
+        Bytes zeroPadded = Bytes.wrapped(Arrays.copyOfRange(tmp, 0, length));
 
         // return the result
         if (preferredOrder.equals(ByteOrder.BIG_ENDIAN)) {
@@ -115,19 +114,32 @@ public interface SRP6IntegerVariable {
     }
 
     /**
-     * Returns {@code true} if and only if the minimal byte array
-     * representation of SRP-6 Integer Variables {@code this} and {@code that}
-     * equals.
+     * Compares the specified object with this SRP-6 Integer Variable for
+     * equality.
+     * <p>
+     * Returns {@code true} if and only if the specified object is also an
+     * SRP-6 Integer Variable and both SRP-6 Integer Variables map to the same
+     * byte sequence. The mapping provided by {@link #bytes(ByteOrder)} must
+     * be used.
      *
-     * @param that the object to compare against
-     * @return {@code true} if SRP-6 Integer Variables equal, {@code false}
-     *          otherwise
+     * @param obj the object to be compared for equality with this
+     *            SRP-6 Integer Variable
+     * @return {@code true} if the specified object is equal to this
+     *         SRP-6 Integer Variable
      */
-    default boolean equals(SRP6IntegerVariable that) {
-        return
-            Arrays.equals(
-                this.bytes(ByteOrder.BIG_ENDIAN).asArray(),
-                that.bytes(ByteOrder.BIG_ENDIAN).asArray()
-            );
-    }
+    @Override
+    boolean equals(Object obj);
+
+    /**
+     * Returns the hash code value for this SRP-6 Integer Variable.
+     * <p>
+     * The hash code of an SRP-6 Integer Variable has to obey the general
+     * contract of {@link Object#hashCode}. That is, if two
+     * SRP-6 Integer Variables are equal, then they must have the same hash
+     * code.
+     *
+     * @return the hash code value for this SRP-6 Integer Variable
+     */
+    @Override
+    int hashCode();
 }

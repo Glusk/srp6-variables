@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,45 +28,42 @@ import com.github.glusk.srp6_variables.wow.WoWVerifier;
 public final class SRP6ServerPublicKeyTest {
     @Test
     public void testAgainstRFC5054TestVectors() {
-        assertTrue(
-            new RFC5054ServerPublicKey().equals(
-                new SRP6ServerPublicKey(
-                    new RFC5054Prime(),
-                    new RFC5054Generator(),
-                    new RFC5054Multiplier(),
-                    new RFC5054Verifier(),
-                    new RFC5054ServerPrivateEphemeral()
-                )
+        assertEquals(
+            new RFC5054ServerPublicKey(),
+            new SRP6ServerPublicKey(
+                new RFC5054Prime(),
+                new RFC5054Generator(),
+                new RFC5054Multiplier(),
+                new RFC5054Verifier(),
+                new RFC5054ServerPrivateEphemeral()
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
     }
     @Test
     public void testAgainstMozillaTestVectors() {
-        assertTrue(
-            new MozillaServerPublicKey().equals(
-                new SRP6ServerPublicKey(
-                    new MozillaPrime(),
-                    new MozillaGenerator(),
-                    new MozillaMultiplier(),
-                    new MozillaVerifier(),
-                    new MozillaServerPrivateEphemeral()
-                )
+        assertEquals(
+            new MozillaServerPublicKey(),
+            new SRP6ServerPublicKey(
+                new MozillaPrime(),
+                new MozillaGenerator(),
+                new MozillaMultiplier(),
+                new MozillaVerifier(),
+                new MozillaServerPrivateEphemeral()
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test
     public void testAgainstWoWTestVectors() {
-        assertTrue(
-            new WoWServerPublicKey().equals(
-                new SRP6ServerPublicKey(
-                    new WoWPrime(),
-                    new WoWGenerator(),
-                    new WoWMultiplier(),
-                    new WoWVerifier(),
-                    new WoWServerPrivateEphemeral()
-                )
+        assertEquals(
+            new WoWServerPublicKey(),
+            new SRP6ServerPublicKey(
+                new WoWPrime(),
+                new WoWGenerator(),
+                new WoWMultiplier(),
+                new WoWVerifier(),
+                new WoWServerPrivateEphemeral()
             ),
             "Computed variable does not match the WoW Test Vector"
         );

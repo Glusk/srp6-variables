@@ -1,6 +1,6 @@
 package com.github.glusk.srp6_variables;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,52 +27,48 @@ import com.github.glusk.srp6_variables.wow.WoWVerifier;
 public final class SRP6VerifierTest {
     @Test
     public void testAgainstRFC5054TestVectors() {
-        assertTrue(
-            new RFC5054Verifier().equals(
-                new SRP6Verifier(
-                    new RFC5054Prime(),
-                    new RFC5054Generator(),
-                    new RFC5054PrivateKey()
-                )
+        assertEquals(
+            new RFC5054Verifier(),
+            new SRP6Verifier(
+                new RFC5054Prime(),
+                new RFC5054Generator(),
+                new RFC5054PrivateKey()
             ),
             "Computed variable does not match the RFC5054 Test Vector"
         );
     }
     @Test
     public void testAgainstMozillaTestVectors() {
-        assertTrue(
-            new MozillaVerifier().equals(
-                new SRP6Verifier(
-                    new MozillaPrime(),
-                    new MozillaGenerator(),
-                    new MozillaPrivateKey()
-                )
+        assertEquals(
+            new MozillaVerifier(),
+            new SRP6Verifier(
+                new MozillaPrime(),
+                new MozillaGenerator(),
+                new MozillaPrivateKey()
             ),
             "Computed variable does not match the Mozilla Test Vector"
         );
     }
     @Test
     public void testAgainstWikipediaExampleVariables() {
-        assertTrue(
-            new WikiVerifier().equals(
-                new SRP6Verifier(
-                    new WikiPrime(),
-                    new WikiGenerator(),
-                    new WikiPrivateKey()
-                )
+        assertEquals(
+            new WikiVerifier(),
+            new SRP6Verifier(
+                new WikiPrime(),
+                new WikiGenerator(),
+                new WikiPrivateKey()
             ),
             "Computed variable does not match the Wikipedia example variable"
         );
     }
     @Test
     public void testAgainstWoWTestVectors() {
-        assertTrue(
-            new WoWVerifier().equals(
-                new SRP6Verifier(
-                    new WoWPrime(),
-                    new WoWGenerator(),
-                    new WoWPrivateKey()
-                )
+        assertEquals(
+            new WoWVerifier(),
+            new SRP6Verifier(
+                new WoWPrime(),
+                new WoWGenerator(),
+                new WoWPrivateKey()
             ),
             "Computed variable does not match the WoW Test Vector"
         );

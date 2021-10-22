@@ -63,7 +63,7 @@ import com.github.glusk.caesar.hashing.ImmutableMessageDigest;
  *   <li>[3] <a href="https://tools.ietf.org/html/rfc2945">RFC 2945</a></li>
  * </ul>
  */
-public final class SRP6PrivateKey implements SRP6IntegerVariable {
+public final class SRP6PrivateKey extends AbstractSRP6IntegerVariable {
     /** SRP-6 Integer Variable: private key (x). */
     private final SRP6IntegerVariable privateKey;
 

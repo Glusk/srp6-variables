@@ -84,8 +84,7 @@ with password `"password123"`:
 Bytes I = new PlainText("alice");
 Bytes P = new PlainText("password123");
 
-final byte[] salt = rng.generateSeed(32);
-Bytes s = () -> salt;
+Bytes s = Bytes.wrapped(rng.generateSeed(32));
 
 SRP6IntegerVariable x = new SRP6PrivateKey(imd, s, I, P, byteOrder);
 SRP6IntegerVariable v = new SRP6Verifier(N, g, x);
@@ -122,7 +121,7 @@ This example is based on the optimized message ordering, as described [here][1]:
     ``` java
     try {
         Bytes cM2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
-        if (!Arrays.equals(M2.asArray(), cM2.asArray())) {
+        if (!(cM2.equals(M2))) {
             throw new SRP6Exception("Server proof mismatch!");
         }
     } catch (SRP6Exception e) {
@@ -152,14 +151,14 @@ This example is based on the optimized message ordering, as described [here][1]:
     and responds with: `N`, `g`, `s` and `B`.
 
 3.  Client then responds with `A` and `M1` and the server performs these
-additional computations:
+    additional computations:
     ``` java
     try {
         SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
         SRP6IntegerVariable S = new ServerSharedSecret(N, A, v, u, b);
         Bytes K = new SessionKey(imd, S, byteOrder);
         Bytes sM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
-        if (!Arrays.equals(M1.asArray(), sM1.asArray())) {
+        if (!(sM1.equals(M1))) {
             throw new SRP6Exception("Client proof mismatch!");
         }
         Bytes M2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
