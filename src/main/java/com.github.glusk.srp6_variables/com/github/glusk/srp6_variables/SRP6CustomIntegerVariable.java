@@ -48,6 +48,14 @@ public final class SRP6CustomIntegerVariable
     /**
      * Creates a new Custom SRP-6 Integer Variable from the specified byte
      * array and the desired byte {@code order}.
+     * <p>
+     * Equivalent to:
+     * <pre>
+     * new SRP6CustomIntegerVariable(
+     *     Bytes.wrapped(bytes),
+     *     order
+     * )
+     * </pre>
      *
      * @param bytes the byte array that represents {@code this}
      *              SRP-6 Integer Variable
