@@ -16,7 +16,6 @@ public final class SRP6RandomEphemeralTest {
         SRP6IntegerVariable r =
             new SRP6RandomEphemeral(
                 new SecureRandom(),
-                -1,
                 new RFC5054Prime()
             );
         assertEquals(
@@ -32,7 +31,9 @@ public final class SRP6RandomEphemeralTest {
             () -> {
                 new SRP6RandomEphemeral(
                     new SecureRandom(),
-                    1024 + 1,
+                    new RFC5054Prime()
+                        .asNonNegativeBigInteger()
+                        .bitLength() + 1,
                     new RFC5054Prime()
                 );
             }
@@ -44,7 +45,6 @@ public final class SRP6RandomEphemeralTest {
             256,
             new SRP6RandomEphemeral(
                 new SecureRandom(),
-                -1,
                 new RFC5054Prime()
             )
             .asNonNegativeBigInteger()

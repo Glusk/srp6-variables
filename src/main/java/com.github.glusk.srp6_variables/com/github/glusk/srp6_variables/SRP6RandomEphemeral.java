@@ -38,6 +38,20 @@ public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
     private SRP6IntegerVariable cached;
 
     /**
+     * Creates a new SRP-6 Random Ephemeral with default bit-length (256 bits).
+     *
+     * @param rng source of randomness
+     * @param prime SRP-6 Integer Variable: prime (N)
+     */
+    @SuppressWarnings("checkstyle:hiddenfield")
+    public SRP6RandomEphemeral(
+        final SecureRandom rng,
+        final SRP6IntegerVariable prime
+    ) {
+        this(rng, MIN_BIT_LENGTH, prime);
+    }
+
+    /**
      * Creates a new SRP-6 Random Ephemeral.
      *
      * @param rng source of randomness
