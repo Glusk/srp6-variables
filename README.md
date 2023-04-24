@@ -102,7 +102,7 @@ This example is based on the optimized message ordering, as described [here][1]:
     ``` java
     try {
         SRP6IntegerVariable x = new SRP6PrivateKey(imd, s, I, P, byteOrder);
-        SRP6IntegerVariable a = new SRP6RandomEphemeral(rng, -1, N);
+        SRP6IntegerVariable a = new SRP6RandomEphemeral(rng, N);
         SRP6IntegerVariable A = new SRP6ClientPublicKey(N, g, a);
         SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
         SRP6IntegerVariable k = new SRP6Multiplier();
@@ -139,7 +139,7 @@ This example is based on the optimized message ordering, as described [here][1]:
     ``` java
     try {
         // lookup and fetch the record by I -> <I, s, v>
-        SRP6IntegerVariable b = new SRP6RandomEphemeral(rng, -1, N);
+        SRP6IntegerVariable b = new SRP6RandomEphemeral(rng, N);
         SRP6IntegerVariable k = new SRP6Multiplier();
         // for SRP-6a:
         // SRP6IntegerVariable k = new SRP6Multiplier(imd, N, g, byteOrder);
