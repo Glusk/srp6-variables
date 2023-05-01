@@ -207,6 +207,7 @@
           <artifactId>coveralls-maven-plugin</artifactId>
           <version>4.3.0</version>
           <configuration>
+            <repoToken>m4fR9B0MjK4Dka1KnSjNOgmU02EmEkxQk</repoToken>
             <sourceDirectories>
               <sourceDirectory>src/main/java/com.github.glusk.srp6_variables</sourceDirectory>
             </sourceDirectories>
