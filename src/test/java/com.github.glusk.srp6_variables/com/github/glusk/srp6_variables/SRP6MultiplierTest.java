@@ -29,7 +29,7 @@ import com.github.glusk.srp6_variables.wow.WoWMultiplier;
 public final class SRP6MultiplierTest {
     @Test
     public void testAgainstRFC5054TestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new RFC5054Multiplier(),
             new SRP6Multiplier(
@@ -45,7 +45,7 @@ public final class SRP6MultiplierTest {
     }
     @Test
     public void testAgainstMozillaTestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new MozillaMultiplier(),
             new SRP6Multiplier(

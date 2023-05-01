@@ -48,29 +48,24 @@ public final class SRP6Multiplier extends AbstractSRP6IntegerVariable {
      * @param hashFunction a one-way hash function - H()
      * @param prime SRP-6 variable: prime (N)
      * @param generator SRP-6 variable: generator (g)
-     * @param endianness the byte order to use when converting the resulting
+     * @param byteOrder the byte order to use when converting the resulting
      *                   hash to integer and the byte order of prime and
      *                   generator byte sequences to feed to the hash function
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of {@code g}
      */
     public SRP6Multiplier(
         final ImmutableMessageDigest hashFunction,
         final SRP6IntegerVariable prime,
         final SRP6IntegerVariable generator,
-        final ByteOrder endianness
-    ) throws SRP6PaddingException {
+        final ByteOrder byteOrder
+    ) {
         this(
             new SRP6CustomIntegerVariable(
                 new Hash(
                     hashFunction,
-                    prime.bytes(endianness),
-                    generator.bytes(
-                        endianness,
-                        prime.bytes(endianness).asArray().length
-                    )
+                    new BytesView(prime, byteOrder),
+                    new ZeroPadded(generator, byteOrder, prime)
                 ),
-                endianness
+                byteOrder
             )
         );
     }
@@ -91,8 +86,15 @@ public final class SRP6Multiplier extends AbstractSRP6IntegerVariable {
         this.multiplier = multiplier;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if byte length of {@code N} is shorter
+     *                               than the byte length of {@code g}
+     */
     @Override
-    public Bytes bytes(final ByteOrder preferredOrder) {
+    public Bytes bytes(final ByteOrder preferredOrder)
+        throws IllegalStateException {
         return multiplier.bytes(preferredOrder);
     }
 }
