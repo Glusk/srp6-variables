@@ -49,13 +49,8 @@ public final class SRP6ClientSharedSecret extends AbstractSRP6IntegerVariable {
      *                            parameter (u)
      * @param clientEphPrvtKey SRP-6 Integer Variable: client ephemeral private
      *                         key (a)
-     * @throws SRP6SecurityException if {@code B == 0 (mod N)} or
-     *                               {@code u == 0}
      */
-    @SuppressWarnings({
-        "checkstyle:hiddenfield",
-        "checkstyle:localvariablename"
-    })
+    @SuppressWarnings("checkstyle:hiddenfield")
     public SRP6ClientSharedSecret(
         final SRP6IntegerVariable prime,
         final SRP6IntegerVariable generator,
@@ -64,21 +59,7 @@ public final class SRP6ClientSharedSecret extends AbstractSRP6IntegerVariable {
         final SRP6IntegerVariable privateKey,
         final SRP6IntegerVariable scramblingParameter,
         final SRP6IntegerVariable clientEphPrvtKey
-    ) throws SRP6SecurityException {
-        BigInteger N = prime.asNonNegativeBigInteger();
-        BigInteger B = serverPublicKey.asNonNegativeBigInteger();
-        if (B.mod(N).equals(BigInteger.ZERO)) {
-            throw new SRP6SecurityException(
-                "Invalid parameters: B == 0 (mod N)"
-            );
-        }
-        BigInteger u = scramblingParameter.asNonNegativeBigInteger();
-        if (u.mod(N).equals(BigInteger.ZERO)) {
-            throw new SRP6SecurityException(
-                "Invalid parameters: u == 0"
-            );
-        }
-
+    ) {
         this.prime = prime;
         this.generator = generator;
         this.multiplier = multiplier;
@@ -88,9 +69,16 @@ public final class SRP6ClientSharedSecret extends AbstractSRP6IntegerVariable {
         this.clientEphPrvtKey = clientEphPrvtKey;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if {@code B == 0 (mod N)} or
+     *                               {@code u == 0}
+     */
     @Override
     @SuppressWarnings("checkstyle:localvariablename")
-    public Bytes bytes(final ByteOrder preferredOrder) {
+    public Bytes bytes(final ByteOrder preferredOrder)
+        throws IllegalStateException {
         BigInteger N = prime.asNonNegativeBigInteger();
         BigInteger g = generator.asNonNegativeBigInteger();
         BigInteger k = multiplier.asNonNegativeBigInteger();
@@ -98,6 +86,21 @@ public final class SRP6ClientSharedSecret extends AbstractSRP6IntegerVariable {
         BigInteger x = privateKey.asNonNegativeBigInteger();
         BigInteger u = scramblingParameter.asNonNegativeBigInteger();
         BigInteger a = clientEphPrvtKey.asNonNegativeBigInteger();
+
+        if (B.mod(N).equals(BigInteger.ZERO)) {
+            throw new IllegalStateException(
+                new SRP6SecurityException(
+                    "Invalid parameters: B == 0 (mod N)"
+                )
+            );
+        }
+        if (u.mod(N).equals(BigInteger.ZERO)) {
+            throw new IllegalStateException(
+                new SRP6SecurityException(
+                    "Invalid parameters: u == 0"
+                )
+            );
+        }
 
         // S = (B - kg^x) ^ (a + ux)
         BigInteger S =
