@@ -34,34 +34,25 @@ public final class SRP6ScramblingParameter extends AbstractSRP6IntegerVariable {
      * @param clientPublicKey SRP-6 variable: client public key (A)
      * @param serverPublicKey SRP-6 variable: server public key (B)
      * @param prime SRP-6 variable: prime (N)
-     * @param endianness the byte order to use when converting the resulting
+     * @param byteOrder the byte order to use when converting the resulting
      *                   hash to integer and the byte order of public keys'
      *                   byte sequences to feed to the hash function
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of either {@code A} or
-     *                              {@code B}
      */
     public SRP6ScramblingParameter(
         final ImmutableMessageDigest hashFunction,
         final SRP6IntegerVariable clientPublicKey,
         final SRP6IntegerVariable serverPublicKey,
         final SRP6IntegerVariable prime,
-        final ByteOrder endianness
-    ) throws SRP6PaddingException {
+        final ByteOrder byteOrder
+    ) {
         this(
             new SRP6CustomIntegerVariable(
                 new Hash(
                     hashFunction,
-                    clientPublicKey.bytes(
-                        endianness,
-                        prime.bytes(endianness).asArray().length
-                    ),
-                    serverPublicKey.bytes(
-                        endianness,
-                        prime.bytes(endianness).asArray().length
-                    )
+                    new ZeroPadded(clientPublicKey, byteOrder, prime),
+                    new ZeroPadded(serverPublicKey, byteOrder, prime)
                 ),
-                endianness
+                byteOrder
             )
         );
     }
@@ -83,8 +74,16 @@ public final class SRP6ScramblingParameter extends AbstractSRP6IntegerVariable {
         this.scramblingParameter = scramblingParameter;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if byte length of {@code N} is shorter
+     *                              than the byte length of either {@code A} or
+     *                              {@code B}
+     */
     @Override
-    public Bytes bytes(final ByteOrder preferredOrder) {
+    public Bytes bytes(final ByteOrder preferredOrder)
+        throws IllegalStateException {
         return scramblingParameter.bytes(preferredOrder);
     }
 }

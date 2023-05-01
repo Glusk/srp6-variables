@@ -34,7 +34,7 @@ import com.github.glusk.srp6_variables.wow.WoWServerPublicKey;
 public final class SRP6ScramblingParameterTest {
     @Test
     public void testAgainstRFC5054TestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new RFC5054ScramblingParameter(),
             new SRP6ScramblingParameter(
@@ -51,7 +51,7 @@ public final class SRP6ScramblingParameterTest {
     }
     @Test
     public void testAgainstMozillaTestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new MozillaScramblingParameter(),
             new SRP6ScramblingParameter(
@@ -91,7 +91,7 @@ public final class SRP6ScramblingParameterTest {
     }
     @Test
     public void testAgainstWoWTestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new WoWScramblingParameter(),
             new SRP6ScramblingParameter(
