@@ -43,27 +43,15 @@ public final class SRP6ServerSharedSecret extends AbstractSRP6IntegerVariable {
      *                            parameter (u)
      * @param serverEphPrvtKey SRP-6 Integer Variable: server ephemeral private
      *                         key (b)
-     * @throws SRP6SecurityException if {@code A == 0 (mod N)}
      */
-    @SuppressWarnings({
-        "checkstyle:hiddenfield",
-        "checkstyle:localvariablename"
-    })
+    @SuppressWarnings("checkstyle:hiddenfield")
     public SRP6ServerSharedSecret(
         final SRP6IntegerVariable prime,
         final SRP6IntegerVariable clientPublicKey,
         final SRP6IntegerVariable verifier,
         final SRP6IntegerVariable scramblingParameter,
         final SRP6IntegerVariable serverEphPrvtKey
-    ) throws SRP6SecurityException {
-        BigInteger N = prime.asNonNegativeBigInteger();
-        BigInteger A = clientPublicKey.asNonNegativeBigInteger();
-        if (A.mod(N).equals(BigInteger.ZERO)) {
-            throw new SRP6SecurityException(
-                "Invalid parameters: A == 0 (mod N)"
-            );
-        }
-
+    ) {
         this.prime = prime;
         this.clientPublicKey = clientPublicKey;
         this.verifier = verifier;
@@ -71,14 +59,28 @@ public final class SRP6ServerSharedSecret extends AbstractSRP6IntegerVariable {
         this.serverEphPrvtKey = serverEphPrvtKey;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if {@code A == 0 (mod N)}
+     */
     @Override
     @SuppressWarnings("checkstyle:localvariablename")
-    public Bytes bytes(final ByteOrder preferredOrder) {
+    public Bytes bytes(final ByteOrder preferredOrder)
+        throws IllegalStateException {
         BigInteger N = prime.asNonNegativeBigInteger();
         BigInteger A = clientPublicKey.asNonNegativeBigInteger();
         BigInteger v = verifier.asNonNegativeBigInteger();
         BigInteger u = scramblingParameter.asNonNegativeBigInteger();
         BigInteger b = serverEphPrvtKey.asNonNegativeBigInteger();
+
+        if (A.mod(N).equals(BigInteger.ZERO)) {
+            throw new IllegalStateException(
+                new SRP6SecurityException(
+                    "Invalid parameters: A == 0 (mod N)"
+                )
+            );
+        }
 
         // S = (Av^u) ^ b
         BigInteger S = A.multiply(v.modPow(u, N)).modPow(b, N);
