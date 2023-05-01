@@ -3,6 +3,7 @@ package com.github.glusk.srp6_variables;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.nio.ByteOrder;
 import java.security.SecureRandom;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public final class SRP6RandomEphemeralTest {
     @Test
     public void throwsIfBitLengthIsTooLong() {
         assertThrows(
-            IllegalArgumentException.class,
+            IllegalStateException.class,
             () -> {
                 new SRP6RandomEphemeral(
                     new SecureRandom(),
@@ -35,7 +36,7 @@ public final class SRP6RandomEphemeralTest {
                         .asNonNegativeBigInteger()
                         .bitLength() + 1,
                     new RFC5054Prime()
-                );
+                ).bytes(ByteOrder.BIG_ENDIAN);
             }
         );
     }
