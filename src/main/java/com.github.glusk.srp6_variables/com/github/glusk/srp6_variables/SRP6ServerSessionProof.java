@@ -25,7 +25,7 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
     private final Bytes serverSessionProof;
 
     /**
-     * Creates a new SRP-6 Server Session Proof that proofs the existence of a
+     * Creates a new SRP-6 Server Session Proof that proves the existence of a
      * shared, strong session key {@code K}.
      * <p>
      * The formula used is as follows:
