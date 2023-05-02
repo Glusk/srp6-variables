@@ -100,32 +100,41 @@ This example is based on the optimized message ordering, as described [here][1]:
 
 3.  Client then performs the following computations:
     ``` java
+    SRP6IntegerVariable x = new SRP6PrivateKey(imd, s, I, P, byteOrder);
+    SRP6IntegerVariable a = new SRP6RandomEphemeral(rng, N);
+    SRP6IntegerVariable A = new SRP6ClientPublicKey(N, g, a);
+    SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
+    SRP6IntegerVariable k = new SRP6Multiplier();
+    // for SRP-6a:
+    // SRP6IntegerVariable k = new SRP6Multiplier(imd, N, g, byteOrder);
+    SRP6IntegerVariable S = new SRP6ClientSharedSecret(N, g, k, B, x, u, a);
+    Bytes K = new SessionKey(imd, S, byteOrder);
+    Bytes M1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
+    ```
+    and responds with `A` and `M1`:
+    ``` java
     try {
-        SRP6IntegerVariable x = new SRP6PrivateKey(imd, s, I, P, byteOrder);
-        SRP6IntegerVariable a = new SRP6RandomEphemeral(rng, N);
-        SRP6IntegerVariable A = new SRP6ClientPublicKey(N, g, a);
-        SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
-        SRP6IntegerVariable k = new SRP6Multiplier();
-        // for SRP-6a:
-        // SRP6IntegerVariable k = new SRP6Multiplier(imd, N, g, byteOrder);
-        SRP6IntegerVariable S = new SRP6ClientSharedSecret(N, g, k, B, x, u, a);
-        Bytes K = new SessionKey(imd, S, byteOrder);
-        Bytes M1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
-    } catch (SRP6Exception e) {
-        // Abort authentication
+        byte[] bufferA = A.bytes(byteOrder).asArray();
+        byte[] bufferM1 = M1.asArray();
+        // send over 'bufferA' and 'bufferM1' to the server
+        // ...
+    } catch (IllegalStateException e) {
+        // Immediately abort SRP-6 login!
+        // Under no circumstances show the server A and M1!
     }
     ```
-    and responds with `A` and `M1`.
 
 4.  Finally, the server responds with `M2` and client checks its validity:
     ``` java
+    Bytes cM2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
     try {
-        Bytes cM2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
-        if (!(cM2.equals(M2))) {
-            throw new SRP6Exception("Server proof mismatch!");
+        if (cM2.equals(M2)) {
+            // Authentication successful!
+        } else {
+            // Authentication failed: server proof mismatch.
         }
-    } catch (SRP6Exception e) {
-        // Abort authentication
+    } catch (IllegalStateException e) {
+         // Immediately abort SRP-6 login!
     }
     ```
 
@@ -137,36 +146,50 @@ This example is based on the optimized message ordering, as described [here][1]:
 
 2.  Then the server performs the following computations:
     ``` java
-    try {
-        // lookup and fetch the record by I -> <I, s, v>
-        SRP6IntegerVariable b = new SRP6RandomEphemeral(rng, N);
-        SRP6IntegerVariable k = new SRP6Multiplier();
-        // for SRP-6a:
-        // SRP6IntegerVariable k = new SRP6Multiplier(imd, N, g, byteOrder);
-        SRP6IntegerVariable B = new SRP6ServerPublicKey(N, g, k, v, b);
-    } catch (SRP6Exception e) {
-        // Abort authentication
-    }
+    // lookup and fetch the record by I -> <I, s, v>
+    SRP6IntegerVariable b = new SRP6RandomEphemeral(rng, N);
+    SRP6IntegerVariable k = new SRP6Multiplier();
+    // for SRP-6a:
+    // SRP6IntegerVariable k = new SRP6Multiplier(imd, N, g, byteOrder);
+    SRP6IntegerVariable B = new SRP6ServerPublicKey(N, g, k, v, b);
     ```
-    and responds with: `N`, `g`, `s` and `B`.
-
-3.  Client then responds with `A` and `M1` and the server performs these
-    additional computations:
+    and responds with: `N`, `g`, `s`, and `B`:
     ``` java
     try {
-        SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
-        SRP6IntegerVariable S = new ServerSharedSecret(N, A, v, u, b);
-        Bytes K = new SessionKey(imd, S, byteOrder);
-        Bytes sM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
-        if (!(sM1.equals(M1))) {
-            throw new SRP6Exception("Client proof mismatch!");
-        }
-        Bytes M2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
-    } catch (SRP6Exception e) {
-        // Abort authentication
+        byte[] bufferN = N.bytes(byteOrder).asArray();
+        byte[] buffer_g = g.bytes(byteOrder).asArray();
+        byte[] buffer_s = s.asArray();
+        byte[] bufferB = B.bytes(byteOrder).asArray();
+        // send over 'bufferN', 'buffer_g', 'buffer_s', 'bufferB' to the client
+        // ...
+    } catch (IllegalStateException e) {
+        // Immediately abort SRP-6 login!
+        // Under no circumstances show the client N, g, s, or B.
     }
     ```
-    and responds with `M2`.
+
+3.  Client then responds with `A` and `M1` and the server performs these
+    additional computations and responds with `M2`:
+    ``` java
+    SRP6IntegerVariable u = new SRP6ScramblingParameter(imd, A, B, N, byteOrder);
+    SRP6IntegerVariable S = new ServerSharedSecret(N, A, v, u, b);
+    Bytes K = new SessionKey(imd, S, byteOrder);
+    Bytes sM1 = new ClientSessionProof(imd, N, g, I, s, A, B, K, byteOrder);
+    try { 
+        if (sM1.equals(M1)) {
+            // Authentication successful!
+            Bytes M2 = new ServerSessionProof(imd, N, A, M1, K, byteOrder);
+            byte[] buffer_M2 = M2.asArray();
+            // send over 'bufferM2' to the client
+            // ...
+        else {
+            // Authentication failed: client proof mismatch.
+        }
+    } catch (IllegalStateException e) {
+        // Immediately abort SRP-6 login!
+        // Under no circumstances show the client M2.
+    }
+    ```
 
 [1]: http://srp.stanford.edu/srp6.ps (WU, Thomas. *SRP-6: Improvements and Refinements to the Secure Remote Password Protocol*)
 
