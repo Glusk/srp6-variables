@@ -42,21 +42,21 @@ public final class ZeroPadded extends AbstractBytes {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException If {@code variableToZeroPad} has a
+     * @throws IllegalStateException If {@code variableToZeroPad} has a
      * greater byte length than {@code variableToPadTo}, an
      * {@code SRP6PaddingException} gets thrown. This method catches it and
-     * re-throws it as and {@code IllegalArgumentException}. More info:
+     * re-throws it as an {@code IllegalStateException}. More info:
      * {@linkplain SRP6IntegerVariable#bytes(ByteOrder,int)}
      */
     @Override
-    public byte[] asArray() {
+    public byte[] asArray() throws IllegalStateException {
         try {
             return this.variableToZeroPad.bytes(
                 this.order,
                 this.variableToPadTo.bytes(this.order).asArray().length
             ).asArray();
         } catch (SRP6PaddingException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalStateException("Failed to zero-pad", e);
         }
     }
 }

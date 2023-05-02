@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.nio.ByteOrder;
 
 import com.github.glusk.srp6_variables.rfc5054.RFC5054ClientPublicKey;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054PremasterSecret;
@@ -30,7 +31,7 @@ import com.github.glusk.srp6_variables.wow.WoWVerifier;
 
 public final class SRP6ServerSharedSecretTest {
     @Test
-    public void testAgainstRFC5054TestVectors() throws SRP6SecurityException {
+    public void testAgainstRFC5054TestVectors() {
         assertEquals(
             new RFC5054PremasterSecret(),
             new SRP6ServerSharedSecret(
@@ -44,7 +45,7 @@ public final class SRP6ServerSharedSecretTest {
         );
     }
     @Test
-    public void testAgainstMozillaTestVectors() throws SRP6SecurityException {
+    public void testAgainstMozillaTestVectors() {
         assertEquals(
             new MozillaSharedSecret(),
             new SRP6ServerSharedSecret(
@@ -60,7 +61,7 @@ public final class SRP6ServerSharedSecretTest {
     @Test
     public void failsIfClientPublicKeyIsZero() {
         assertThrows(
-            SRP6SecurityException.class,
+            IllegalStateException.class,
             () -> {
                 new SRP6ServerSharedSecret(
                     new RFC5054Prime(),
@@ -70,14 +71,14 @@ public final class SRP6ServerSharedSecretTest {
                     new RFC5054Verifier(),
                     new RFC5054ScramblingParameter(),
                     new RFC5054ServerPrivateEphemeral()
-                );
+                ).bytes(ByteOrder.BIG_ENDIAN);
             }
         );
     }
     @Test
     public void failsIfClientPublicKeyEqualsToPrime() {
         assertThrows(
-            SRP6SecurityException.class,
+            IllegalStateException.class,
             () -> {
                 new SRP6ServerSharedSecret(
                     new RFC5054Prime(),
@@ -85,12 +86,12 @@ public final class SRP6ServerSharedSecretTest {
                     new RFC5054Verifier(),
                     new RFC5054ScramblingParameter(),
                     new RFC5054ServerPrivateEphemeral()
-                );
+                ).bytes(ByteOrder.BIG_ENDIAN);
             }
         );
     }
     @Test
-    public void testAgainstWoWTestVectors() throws SRP6SecurityException {
+    public void testAgainstWoWTestVectors() {
         assertEquals(
             new WoWPremasterSecret(),
             new SRP6ServerSharedSecret(

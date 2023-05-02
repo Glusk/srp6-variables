@@ -29,8 +29,8 @@ public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
 
     /** Source of randomness. */
     private final SecureRandom rng;
-    /** The bit-length of {@code this} variable. */
-    private final int bitLength;
+    /** The desired bit-length of {@code this} variable. */
+    private final int desiredBitLength;
     /** SRP-6 Integer Variable: prime (N). */
     private final SRP6IntegerVariable prime;
 
@@ -57,10 +57,6 @@ public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
      * @param rng source of randomness
      * @param desiredBitLength the desired bit-length of {@code this} variable
      * @param prime SRP-6 Integer Variable: prime (N)
-     * @throws IllegalArgumentException If the set bit length is greater
-     *                                  than the bit length of {@code prime}.
-     *                                  More formally if:
-     *               {@code Math.max(desiredBitLength, 256) > bitlength(prime)}
      */
     @SuppressWarnings("checkstyle:hiddenfield")
     public SRP6RandomEphemeral(
@@ -69,16 +65,18 @@ public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
         final SRP6IntegerVariable prime
     ) throws IllegalArgumentException {
         this.rng = rng;
-        this.bitLength = Math.max(desiredBitLength, MIN_BIT_LENGTH);
-        if (this.bitLength > prime.asNonNegativeBigInteger().bitLength()) {
-            throw new IllegalArgumentException(
-                "The desired bit-length is greater than the bit-length of "
-              + "prime (N)."
-            );
-        }
+        this.desiredBitLength = desiredBitLength;
         this.prime = prime;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException If the set bit length is greater
+     *                                  than the bit length of {@code prime}.
+     *                                  More formally if:
+     *               {@code Math.max(desiredBitLength, 256) > bitlength(prime)}
+     */
     @Override
     @SuppressWarnings("checkstyle:localvariablename")
     public Bytes bytes(final ByteOrder preferredOrder) {
@@ -88,6 +86,13 @@ public final class SRP6RandomEphemeral extends AbstractSRP6IntegerVariable {
              (srp-2.1.2), available at: http://srp.stanford.edu/download.html
              */
             BigInteger N = prime.asNonNegativeBigInteger();
+            int bitLength = Math.max(desiredBitLength, MIN_BIT_LENGTH);
+            if (bitLength > N.bitLength()) {
+                throw new IllegalStateException(
+                    "The desired bit-length is greater than the bit-length of "
+                  + "prime (N)."
+                );
+            }
             BigInteger r;
             do {
                 r = new BigInteger(bitLength, rng);

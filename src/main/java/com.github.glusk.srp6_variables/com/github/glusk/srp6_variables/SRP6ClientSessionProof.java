@@ -47,9 +47,6 @@ public final class SRP6ClientSessionProof extends AbstractBytes {
      * @param sessionKey SRP-6 Variable: session key (K)
      * @param byteOrder the byte order to use when converting SRP-6 Integer
      *                  Variables to a byte sequence
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of either {@code A}
-     *                              or {@code B}
      */
     @SuppressWarnings("checkstyle:parameternumber")
     public SRP6ClientSessionProof(
@@ -62,30 +59,24 @@ public final class SRP6ClientSessionProof extends AbstractBytes {
         final SRP6IntegerVariable serverPublicKey,
         final Bytes sessionKey,
         final ByteOrder byteOrder
-    ) throws SRP6PaddingException {
+    ) {
         this(
             new Hash(
                 hashFunction,
                 new Xor(
                     new Hash(
                         hashFunction,
-                        prime.bytes(byteOrder)
+                        new BytesView(prime, byteOrder)
                     ),
                     new Hash(
                         hashFunction,
-                        generator.bytes(byteOrder)
+                        new BytesView(generator, byteOrder)
                     )
                 ),
                 new Hash(hashFunction, identity),
                 salt,
-                clientPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
-                serverPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
+                new ZeroPadded(clientPublicKey, byteOrder, prime),
+                new ZeroPadded(serverPublicKey, byteOrder, prime),
                 sessionKey
             )
         );
@@ -109,9 +100,6 @@ public final class SRP6ClientSessionProof extends AbstractBytes {
      * @param sharedSecret SRP-6 Variable: shared secret (S)
      * @param byteOrder the byte order to use when converting SRP-6 Integer
      *                  Variables to a byte sequence
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of either {@code A},
-     *                              {@code B} or {@code S}
      */
     public SRP6ClientSessionProof(
         final ImmutableMessageDigest hashFunction,
@@ -120,22 +108,13 @@ public final class SRP6ClientSessionProof extends AbstractBytes {
         final SRP6IntegerVariable serverPublicKey,
         final SRP6IntegerVariable sharedSecret,
         final ByteOrder byteOrder
-    ) throws SRP6PaddingException {
+    ) {
         this(
             new Hash(
                 hashFunction,
-                clientPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
-                serverPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
-                sharedSecret.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                )
+                new ZeroPadded(clientPublicKey, byteOrder, prime),
+                new ZeroPadded(serverPublicKey, byteOrder, prime),
+                new ZeroPadded(sharedSecret, byteOrder, prime)
             )
         );
     }
@@ -152,8 +131,15 @@ public final class SRP6ClientSessionProof extends AbstractBytes {
         this.clientSessionProof = clientSessionProof;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if byte length of {@code N} is shorter
+     *                              than the byte length of either {@code A}
+     *                              {@code B}, or {@code S}
+     */
     @Override
-    public byte[] asArray() {
+    public byte[] asArray() throws IllegalStateException {
         return clientSessionProof.asArray();
     }
 }

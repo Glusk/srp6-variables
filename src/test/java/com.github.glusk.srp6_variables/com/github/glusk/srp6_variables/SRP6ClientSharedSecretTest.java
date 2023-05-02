@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.nio.ByteOrder;
 
 import com.github.glusk.srp6_variables.rfc5054.RFC5054ServerPublicKey;
 import com.github.glusk.srp6_variables.rfc5054.RFC5054PremasterSecret;
@@ -27,7 +28,7 @@ import com.github.glusk.srp6_variables.mozilla.MozillaPrivateKey;
 
 public final class SRP6ClientSharedSecretTest {
     @Test
-    public void testAgainstRFC5054TestVectors() throws SRP6SecurityException {
+    public void testAgainstRFC5054TestVectors() {
         assertEquals(
             new RFC5054PremasterSecret(),
             new SRP6ClientSharedSecret(
@@ -43,7 +44,7 @@ public final class SRP6ClientSharedSecretTest {
         );
     }
     @Test
-    public void testAgainstMozillaTestVectors() throws SRP6SecurityException {
+    public void testAgainstMozillaTestVectors() {
         assertEquals(
             new MozillaSharedSecret(),
             new SRP6ClientSharedSecret(
@@ -61,7 +62,7 @@ public final class SRP6ClientSharedSecretTest {
     @Test
     public void failsIfServerPublicKeyIsZero() {
         assertThrows(
-            SRP6SecurityException.class,
+            IllegalStateException.class,
             () -> {
                 new SRP6ClientSharedSecret(
                     new RFC5054Prime(),
@@ -73,14 +74,14 @@ public final class SRP6ClientSharedSecretTest {
                     new RFC5054PrivateKey(),
                     new RFC5054ScramblingParameter(),
                     new RFC5054ClientPrivateEphemeral()
-                );
+                ).bytes(ByteOrder.BIG_ENDIAN);
             }
         );
     }
     @Test
     public void failsIfRandomScramblingParameterIsZero() {
         assertThrows(
-            SRP6SecurityException.class,
+            IllegalStateException.class,
             () -> {
                 new SRP6ClientSharedSecret(
                     new RFC5054Prime(),
@@ -92,7 +93,7 @@ public final class SRP6ClientSharedSecretTest {
                         BigInteger.ZERO
                     ),
                     new RFC5054ClientPrivateEphemeral()
-                );
+                ).bytes(ByteOrder.BIG_ENDIAN);
             }
         );
     }

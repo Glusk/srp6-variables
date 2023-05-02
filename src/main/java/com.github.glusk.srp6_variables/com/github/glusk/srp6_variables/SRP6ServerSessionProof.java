@@ -25,7 +25,7 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
     private final Bytes serverSessionProof;
 
     /**
-     * Creates a new SRP-6 Server Session Proof that proofs the existence of a
+     * Creates a new SRP-6 Server Session Proof that proves the existence of a
      * shared, strong session key {@code K}.
      * <p>
      * The formula used is as follows:
@@ -41,8 +41,6 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
      * @param sessionKey SRP-6 Variable: session key (K)
      * @param byteOrder the byte order to use when converting SRP-6 Integer
      *                  Variables to a byte sequence
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of {@code A}
      */
     public SRP6ServerSessionProof(
         final ImmutableMessageDigest hashFunction,
@@ -51,14 +49,11 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
         final Bytes clientProof,
         final Bytes sessionKey,
         final ByteOrder byteOrder
-    ) throws SRP6PaddingException {
+    ) {
         this(
             new Hash(
                 hashFunction,
-                clientPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
+                new ZeroPadded(clientPublicKey, byteOrder, prime),
                 clientProof,
                 sessionKey
             )
@@ -83,9 +78,6 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
      * @param sharedSecret SRP-6 Integer Variable: shared secret (S)
      * @param byteOrder the byte order to use when converting SRP-6 Integer
      *                  Variables to a byte sequence
-     * @throws SRP6PaddingException if byte length of {@code N} is shorter
-     *                              than the byte length of either {@code A}
-     *                              or {@code S}
      */
     public SRP6ServerSessionProof(
         final ImmutableMessageDigest hashFunction,
@@ -94,19 +86,13 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
         final Bytes clientProof,
         final SRP6IntegerVariable sharedSecret,
         final ByteOrder byteOrder
-    ) throws SRP6PaddingException {
+    ) {
         this(
             new Hash(
                 hashFunction,
-                clientPublicKey.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                ),
+                new ZeroPadded(clientPublicKey, byteOrder, prime),
                 clientProof,
-                sharedSecret.bytes(
-                    byteOrder,
-                    prime.bytes(byteOrder).asArray().length
-                )
+                new ZeroPadded(sharedSecret, byteOrder, prime)
             )
         );
     }
@@ -123,8 +109,15 @@ public final class SRP6ServerSessionProof extends AbstractBytes {
         this.serverSessionProof = serverSessionProof;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalStateException if byte length of {@code N} is shorter
+     *                              than the byte length of either {@code A}
+     *                              or {@code S}
+     */
     @Override
-    public byte[] asArray() {
+    public byte[] asArray() throws IllegalStateException {
         return serverSessionProof.asArray();
     }
 }

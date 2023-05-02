@@ -32,7 +32,7 @@ import com.github.glusk.srp6_variables.wow.WoWClientPublicKey;
 public final class SRP6ServerSessionProofTest {
     @Test
     public void testAgainstMozillaTestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new MozillaServerSessionProof(),
             new SRP6ServerSessionProof(
@@ -76,7 +76,7 @@ public final class SRP6ServerSessionProofTest {
     }
     @Test
     public void testAgainstWoWTestVectors()
-        throws NoSuchAlgorithmException, SRP6PaddingException {
+        throws NoSuchAlgorithmException {
         assertEquals(
             new WoWServerSessionProof(),
             new SRP6ServerSessionProof(
