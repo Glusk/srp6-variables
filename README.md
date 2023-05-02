@@ -182,7 +182,7 @@ This example is based on the optimized message ordering, as described [here][1]:
             byte[] buffer_M2 = M2.asArray();
             // send over 'bufferM2' to the client
             // ...
-        else {
+        } else {
             // Authentication failed: client proof mismatch.
         }
     } catch (IllegalStateException e) {
